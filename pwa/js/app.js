@@ -1,8 +1,9 @@
-// Aralin 1 PWA - Main Application
+// M.I.K.A PWA - Main Application
 (function() {
   'use strict';
 
   // ===== STATE =====
+  let currentAralin = 'aralin1';
   let currentActivity = 0;
   let currentSlide = 0;
   let selectedWord = null;
@@ -70,7 +71,7 @@
 
   function saveState(inActivity, index) {
     try {
-      sessionStorage.setItem('mika_state', JSON.stringify({ inActivity, index }));
+      sessionStorage.setItem('mika_state', JSON.stringify({ inActivity, index, aralin: currentAralin }));
     } catch(e) {}
   }
 
@@ -79,12 +80,55 @@
       const raw = sessionStorage.getItem('mika_state');
       if (!raw) return;
       const state = JSON.parse(raw);
+      if (state.aralin) switchAralin(state.aralin);
       if (state.inActivity && state.index >= 0 && state.index < ACTIVITIES.length) {
         dashboard.classList.add('hidden');
         app.classList.remove('hidden');
         navigateTo(state.index);
       }
     } catch(e) {}
+  }
+
+  function switchAralin(aralinKey) {
+    if (!LESSONS[aralinKey]) return;
+    currentAralin = aralinKey;
+    ACTIVITIES = LESSONS[aralinKey].activities;
+    initProgressDots();
+  }
+
+  function isAralinUnlocked(aralinKey) {
+    try {
+      const progress = JSON.parse(localStorage.getItem('mika_progress') || '{}');
+      return !!progress[aralinKey];
+    } catch(e) { return false; }
+  }
+
+  function markAralinComplete(aralinKey) {
+    try {
+      const progress = JSON.parse(localStorage.getItem('mika_progress') || '{}');
+      progress[aralinKey] = true;
+      localStorage.setItem('mika_progress', JSON.stringify(progress));
+    } catch(e) {}
+  }
+
+  function updateDashboardLocks() {
+    const card2 = document.getElementById('cardAralin2');
+    if (!card2) return;
+    if (isAralinUnlocked('aralin2')) {
+      card2.classList.remove('locked');
+      card2.classList.add('active');
+      const lockIcon = card2.querySelector('.lock-icon');
+      const numSpan = card2.querySelector('.unlock-number');
+      if (lockIcon) lockIcon.style.display = 'none';
+      if (numSpan) numSpan.style.display = '';
+      const btn = card2.querySelector('#btnStartAralin2');
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = 'Magsimula';
+      }
+      const desc = card2.querySelector('.dash-card-desc');
+      if (desc) desc.textContent = 'Mga Salita sa Konteksto';
+    }
   }
 
   function showDashboard() {
@@ -102,17 +146,29 @@
     if (dashboard.classList.contains('hidden')) {
         dashboard.classList.remove('hidden');
     }
+    updateDashboardLocks();
     saveState(false, 0);
   }
 
   function setupDashboard() {
-    const startBtn = $('#btnStartAralin1');
-    if (startBtn) {
-        startBtn.addEventListener('click', () => {
+    const startBtn1 = $('#btnStartAralin1');
+    if (startBtn1) {
+      startBtn1.addEventListener('click', () => {
+        switchAralin('aralin1');
         dashboard.classList.add('hidden');
         app.classList.remove('hidden');
         navigateTo(0);
-        });
+      });
+    }
+
+    const startBtn2 = $('#btnStartAralin2');
+    if (startBtn2) {
+      startBtn2.addEventListener('click', () => {
+        switchAralin('aralin2');
+        dashboard.classList.add('hidden');
+        app.classList.remove('hidden');
+        navigateTo(0);
+      });
     }
 
     const homeBtn = $('#btnHome');
@@ -122,6 +178,8 @@
         showDashboard();
       });
     }
+
+    updateDashboardLocks();
   }
 
   function showApp() {
@@ -196,12 +254,20 @@
     if (prevBtn) prevBtn.classList.toggle('disabled', index <= 0);
     if (nextBtn) nextBtn.classList.toggle('disabled', index >= ACTIVITIES.length - 1);
 
+    // Mark aralin complete when reaching last activity
+    if (index >= ACTIVITIES.length - 1) {
+      markAralinComplete(currentAralin);
+      // Unlock next aralin
+      if (currentAralin === 'aralin1') markAralinComplete('aralin2');
+    }
+
     // Update progress dots
     updateProgressDots(index);
 
     // Update header
     const activity = ACTIVITIES[index];
-    if (headerTitle) { headerTitle.textContent = activity.title; }
+    const lessonLabel = LESSONS[currentAralin] ? LESSONS[currentAralin].title : '';
+    if (headerTitle) { headerTitle.textContent = lessonLabel + ' - ' + activity.title; }
     if (headerSubtitle) { headerSubtitle.textContent = activity.subtitle || ''; }
 
     // Render activity
@@ -215,6 +281,7 @@
       case 'hotspots':    renderHotspots(view, activity); break;
       case 'drag-drop':   renderDragDrop(view, activity); break;
       case 'quiz':        renderQuiz(view, activity); break;
+      case 'poem-audio':  renderPoemAudio(view, activity); break;
     }
 
     container.appendChild(view);
@@ -883,6 +950,168 @@
 
     card.appendChild(choicesDiv);
     view.appendChild(card);
+  }
+
+  // ===== RENDERER: POEM + AUDIO (Aralin 2 Aktibiti 1) =====
+  function renderPoemAudio(view, activity) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'poem-activity';
+
+    // Panuto popup overlay (auto-show)
+    if (activity.instruction) {
+      let bodyText = activity.instruction;
+      if (bodyText.startsWith('Panuto:')) {
+        bodyText = '<strong>Panuto:</strong> ' + bodyText.substring(7);
+      }
+      const overlay = document.createElement('div');
+      overlay.className = 'dd-panuto-overlay';
+      overlay.innerHTML =
+        '<div class="dd-panuto-modal">' +
+          '<div class="dd-panuto-ribbon">' + escapeHtml(activity.title) + '</div>' +
+          '<div class="dd-panuto-body">' + bodyText + '</div>' +
+          '<button class="dd-panuto-close">OK, Simulan!</button>' +
+        '</div>';
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay || e.target.classList.contains('dd-panuto-close')) {
+          overlay.classList.add('dd-panuto-hide');
+          setTimeout(() => overlay.remove(), 300);
+        }
+      });
+      view.appendChild(overlay);
+    }
+
+    // Poem card
+    const card = document.createElement('div');
+    card.className = 'poem-card';
+
+    // Title
+    const titleWrap = document.createElement('div');
+    titleWrap.className = 'poem-title-wrapper';
+    const title = document.createElement('h2');
+    title.className = 'poem-title';
+    title.textContent = '\u201C' + activity.poemTitle + '\u201D';
+    titleWrap.appendChild(title);
+    card.appendChild(titleWrap);
+
+    // Stanzas
+    activity.stanzas.forEach(stanza => {
+      const stanzaEl = document.createElement('div');
+      stanzaEl.className = 'poem-stanza';
+      stanza.lines.forEach(line => {
+        const lineEl = document.createElement('span');
+        lineEl.className = 'poem-line';
+        if (line.bold) {
+          lineEl.innerHTML = escapeHtml(line.text) +
+            '<span class="poem-bold">' + escapeHtml(line.bold) + '</span>' +
+            (line.after ? escapeHtml(line.after) : '');
+        } else {
+          lineEl.textContent = line.text;
+        }
+        stanzaEl.appendChild(lineEl);
+      });
+      card.appendChild(stanzaEl);
+    });
+
+    wrapper.appendChild(card);
+
+    // Audio player bar
+    const player = document.createElement('div');
+    player.className = 'poem-player';
+
+    const playBtn = document.createElement('button');
+    playBtn.className = 'poem-play-btn';
+    const playSVG = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+    const pauseSVG = '<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+    playBtn.innerHTML = playSVG;
+
+    const progressWrap = document.createElement('div');
+    progressWrap.className = 'poem-progress-wrap';
+    const progressFill = document.createElement('div');
+    progressFill.className = 'poem-progress-fill';
+    progressWrap.appendChild(progressFill);
+
+    const timeLabel = document.createElement('span');
+    timeLabel.className = 'poem-time';
+    timeLabel.textContent = '0:00';
+
+    player.appendChild(playBtn);
+    player.appendChild(progressWrap);
+    player.appendChild(timeLabel);
+    wrapper.appendChild(player);
+
+    const fmtTime = (s) => {
+      const m = Math.floor(s / 60);
+      const sec = Math.floor(s % 60);
+      return m + ':' + (sec < 10 ? '0' : '') + sec;
+    };
+
+    let scrollRAF = null;
+    let currentScroll = 0;
+    const autoScroll = () => {
+      if (!audioEl || audioEl.paused) return;
+      if (audioEl.duration && card.scrollHeight > card.clientHeight) {
+        const maxScroll = card.scrollHeight - card.clientHeight;
+        const targetScroll = maxScroll * (audioEl.currentTime / audioEl.duration);
+        currentScroll += (targetScroll - currentScroll) * 0.05;
+        card.scrollTop = currentScroll;
+      }
+      scrollRAF = requestAnimationFrame(autoScroll);
+    };
+
+    const updateProgress = () => {
+      if (!audioEl) return;
+      const pct = audioEl.duration ? (audioEl.currentTime / audioEl.duration) * 100 : 0;
+      progressFill.style.width = pct + '%';
+      timeLabel.textContent = fmtTime(audioEl.currentTime);
+    };
+
+    progressWrap.addEventListener('click', (e) => {
+      if (!audioEl || !audioEl.duration) return;
+      const rect = progressWrap.getBoundingClientRect();
+      const pct = (e.clientX - rect.left) / rect.width;
+      audioEl.currentTime = pct * audioEl.duration;
+      currentScroll = card.scrollTop;
+    });
+
+    playBtn.addEventListener('click', () => {
+      if (audioEl && !audioEl.paused) {
+        if (scrollRAF) cancelAnimationFrame(scrollRAF);
+        audioEl.pause();
+        playBtn.innerHTML = playSVG;
+        playBtn.classList.remove('playing');
+      } else if (audioEl && audioEl.paused && audioEl.currentTime > 0) {
+        audioEl.play().then(() => {
+          scrollRAF = requestAnimationFrame(autoScroll);
+        }).catch(() => {});
+        playBtn.innerHTML = pauseSVG;
+        playBtn.classList.add('playing');
+      } else {
+        currentScroll = card.scrollTop;
+        audioEl = new Audio(activity.audio);
+        audioEl.addEventListener('timeupdate', updateProgress);
+        audioEl.play().then(() => {
+          scrollRAF = requestAnimationFrame(autoScroll);
+        }).catch(() => {});
+        playBtn.innerHTML = pauseSVG;
+        playBtn.classList.add('playing');
+        audioEl.onended = () => {
+          if (scrollRAF) cancelAnimationFrame(scrollRAF);
+          playBtn.innerHTML = playSVG;
+          playBtn.classList.remove('playing');
+          progressFill.style.width = '100%';
+          audioEl = null;
+        };
+      }
+    });
+
+    view.appendChild(wrapper);
+  }
+
+  // ===== UTILS =====
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
   }
 
   // ===== START =====

@@ -1,5 +1,7 @@
-// Aralin 1 - Complete Content Data
-const ACTIVITIES = [
+// M.I.K.A - Complete Content Data
+
+// ===== ARALIN 1 =====
+const ARALIN_1 = [
   {
     id: 'aktibiti1',
     title: 'Aktibiti 1',
@@ -141,3 +143,51 @@ const ACTIVITIES = [
     ]
   }
 ];
+
+// ===== ARALIN 2 =====
+const ARALIN_2 = [
+  {
+    id: 'a2_aktibiti1',
+    title: 'Aktibiti 1',
+    subtitle: 'Basahin at Unawain',
+    type: 'poem-audio',
+    instruction: 'Basahin ang isang tula at bigyang pansin ang mga nakadiing salita.',
+    poemTitle: 'Sa Landas ng Pangarap',
+    audio: 'assets/audio/aralin2-aktibiti1.mp3',
+    stanzas: [
+      {
+        lines: [
+          { text: 'Sa simula ng aking ', bold: 'pakikipagsapalaran,' },
+          { text: 'Baon ang tapang at pag-asang tangan;' },
+          { text: 'Ngunit may mga taong ', bold: '\u2018di maginoo,' },
+          { text: 'Na humahadlang sa aking mithiing totoo.' }
+        ]
+      },
+      {
+        lines: [
+          { text: 'Isang ', bold: 'balintuna', after: ' ang aking natuklasan,' },
+          { text: 'Habang ako\u2019y tumutulong, ako\u2019y hinusgahan;' },
+          { text: 'Sa bigat ng suliranin ako\u2019y ', bold: 'dumaing,' },
+          { text: 'Ngunit hindi sumuko sa hamon ng hangin.' }
+        ]
+      },
+      {
+        lines: [
+          { text: 'Sa huli\u2019y aking natamo ang tagumpay,' },
+          { text: 'Pagkilala\u2019t tuwa\u2019y aking napag-alay;' },
+          { text: 'At bilang tanda ng wagas na pagsinta,' },
+          { text: 'Isang mainit na ', bold: 'hagkan', after: ' ang gantimpala.' }
+        ]
+      }
+    ]
+  }
+];
+
+// ===== LESSONS REGISTRY =====
+const LESSONS = {
+  aralin1: { title: 'Aralin 1', activities: ARALIN_1 },
+  aralin2: { title: 'Aralin 2', activities: ARALIN_2 }
+};
+
+// Default - starts with Aralin 1
+let ACTIVITIES = ARALIN_1;

@@ -1,5 +1,5 @@
 // Aralin 1 PWA - Service Worker
-const CACHE_NAME = 'aralin1-v35';
+const CACHE_NAME = 'aralin1-v36';
 const ASSETS = [
   './',
   './index.html',
@@ -15,7 +15,8 @@ const ASSETS = [
   './assets/images/act5-4.png',
   './assets/images/act5-5.png',
   './assets/images/act5-6.png',
-  './assets/audio/aktibiti1.m4a'
+  './assets/audio/aktibiti1.m4a',
+  './assets/audio/aralin2-aktibiti1.mp3'
 ];
 
 // Install - cache all assets
