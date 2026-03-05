@@ -929,16 +929,9 @@ body::before {
 .activity-enter { 
   animation: slideIn 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-.activity-enter img {
-  animation: smoothImageLoad 0.8s ease-out backwards;
-}
 @keyframes slideIn {
   from { opacity: 0; transform: scale(0.98) translateY(10px); }
   to { opacity: 1; transform: scale(1) translateY(0); }
-}
-@keyframes smoothImageLoad {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
 }
 
 /* ===== DASHBOARD ===== */
