@@ -15,18 +15,15 @@ const ACTIVITIES = [
     title: 'Aktibiti 2',
     subtitle: 'Tuklasin',
     type: 'hotspots',
-    instruction: 'Panuto: Pindutin ang bahagi ng larawan upang malaman ang angkop na salita, kahulugan, at pangungusap.',
-    bg: 'assets/images/3.png',
-    bgWidth: 1000, bgHeight: 499,
-    // hotspotColor: '#1d5999', // REMOVED to use CSS theme (Bamboo/Orange)
+    instruction: 'Panuto: Pindutin ang larawan upang malaman ang angkop na salita, kahulugan, at pangungusap.',
     hotspots: [
       {
-        x: 25.7, y: 72, // Left Boy (Yellow/Lumbay)
+        img: 'assets/images/act2-1.png',
         title: 'LUMBAY',
         content: 'Kahulugan: Matinding kalungkutan\n\nPangungusap: Ramdam niya ang lumbay habang nakaupo.'
       },
       {
-        x: 74.3, y: 72, // Right Boy (Blue/Nangangamba)
+        img: 'assets/images/act2-2.png',
         title: 'NANGANGAMBA',
         content: 'Kahulugan: Nakararamdam ng takot\n\nPangungusap: Nangangamba ako dahil sa paparating na bagyo.'
       }
