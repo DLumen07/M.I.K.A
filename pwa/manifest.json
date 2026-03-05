@@ -4,7 +4,7 @@
   "description": "Interactive Filipino vocabulary learning - Aralin 1",
   "start_url": "./index.html",
   "display": "standalone",
-  "orientation": "landscape",
+  "orientation": "any",
   "background_color": "#5d4037",
   "theme_color": "#5d4037",
   "lang": "fil",
