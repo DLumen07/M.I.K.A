@@ -796,6 +796,8 @@ body::before {
     padding: 8px 10px;
     flex-wrap: wrap;
     border-radius: 10px;
+    margin: 0 16px;
+    width: auto;
   }
   .dd-word { font-size: 13px; padding: 6px 12px; }
   .quiz-card { padding: 24px; }
