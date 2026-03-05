@@ -270,8 +270,8 @@ body::before {
   display: flex;
   flex-direction: row;
   gap: 14px;
-  width: 95%;
-  max-width: 1200px;
+  width: 85%;
+  max-width: 800px;
   padding: 10px 0;
   align-items: stretch;
   justify-content: center;
@@ -450,6 +450,9 @@ body::before {
   overflow-x: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .dd-scroll-container::-webkit-scrollbar { display: none; }
 /* Each slide section */
