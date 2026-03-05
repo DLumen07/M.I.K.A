@@ -520,14 +520,7 @@ body::before {
   box-sizing: border-box;
 }
 
-/* Text-only activities (Aktibiti 3): fixed height content */
-.dd-text-only .dd-content-wrapper {
-  height: 380px;
-  overflow-y: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-.dd-text-only .dd-content-wrapper::-webkit-scrollbar { display: none; }
+/* Text-only activities (Aktibiti 3): no fixed height, content fits naturally */
 .dd-sentences {
   display: flex;
   flex-direction: column;
