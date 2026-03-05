@@ -386,19 +386,19 @@ body::before {
   padding: 0 16px;
   box-sizing: border-box;
 }
-/* Image card — word choices overlaid on top */
+/* Image card */
 .dd-img-container {
   width: 100%;
   max-width: 920px;
   position: relative;
   border: 3px solid #8d6e63;
-  border-radius: 12px;
+  border-radius: 12px 12px 0 0;
   box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-  margin-bottom: 8px;
+  margin-bottom: 0;
   overflow: hidden;
   display: flex;
   justify-content: center;
-  background: #fff8e1; /* Parchement background for pillarboxing */
+  background: #fff8e1;
 }
 .dd-sentence-img {
   width: 100%;
@@ -426,7 +426,8 @@ body::before {
   max-width: 920px;
   background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 50%, #fff8e1 100%);
   border: 3px solid #8d6e63;
-  border-radius: 12px;
+  border-top: none;
+  border-radius: 0 0 12px 12px;
   padding: 12px 18px;
   box-shadow: 0 5px 20px rgba(0,0,0,0.3);
   margin-bottom: 8px;
@@ -1075,16 +1076,18 @@ body::before {
 /* ===== MOBILE FOOTER REDESIGN ===== */
 @media (max-width: 600px) {
   .nav-arrows {
-    background: rgba(15, 10, 8, 0.85);
-    backdrop-filter: blur(20px) saturate(1.5);
-    -webkit-backdrop-filter: blur(20px) saturate(1.5);
+    background: #ffffff;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     bottom: 0;
-    padding: 8px 16px;
-    padding-bottom: max(8px, env(safe-area-inset-bottom));
+    padding: 6px 20px;
+    padding-bottom: max(6px, env(safe-area-inset-bottom));
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     pointer-events: auto;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: none;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
     z-index: 1000;
     gap: 0;
   }
@@ -1094,50 +1097,70 @@ body::before {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
-    flex: 1;
-    max-width: 200px;
+    gap: 4px;
+    flex: 0;
   }
 
   /* Progress dots */
   .nav-progress {
     display: flex;
-    gap: 5px;
+    gap: 4px;
     align-items: center;
     justify-content: center;
+    position: absolute;
+    bottom: max(2px, env(safe-area-inset-bottom));
+    left: 50%;
+    transform: translateX(-50%);
   }
   .nav-dot {
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.12);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .nav-dot.active {
-    width: 18px;
-    border-radius: 4px;
-    background: #fcd116;
-    box-shadow: 0 0 8px rgba(252, 209, 22, 0.4);
+    width: 16px;
+    border-radius: 3px;
+    background: #7c3aed;
+    box-shadow: 0 0 6px rgba(124, 58, 237, 0.3);
   }
   .nav-dot.completed {
-    background: rgba(252, 209, 22, 0.5);
+    background: rgba(124, 58, 237, 0.4);
   }
 
-  /* Modern arrow buttons */
+  /* Nav buttons as icon+label columns */
   .nav-arrow-btn {
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #fff;
+    width: auto;
+    height: auto;
+    border-radius: 12px;
+    background: transparent;
+    border: none;
+    color: #9ca3af;
     box-shadow: none;
     transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 14px;
+  }
+  .nav-arrow-btn::after {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+  .nav-arrow-btn.prev::after {
+    content: 'Back';
+  }
+  .nav-arrow-btn.next::after {
+    content: 'Next';
   }
   .nav-arrow-btn:hover,
   .nav-arrow-btn:active {
-    background: rgba(255, 255, 255, 0.15) !important;
-    transform: scale(0.95) !important;
+    background: rgba(124, 58, 237, 0.06) !important;
+    color: #7c3aed !important;
+    transform: none !important;
     box-shadow: none !important;
   }
   .nav-arrow-btn svg {
@@ -1150,29 +1173,29 @@ body::before {
     transform: none;
   }
 
-  /* Modern home button */
+  /* Modern home button — elevated circle */
   .home-btn {
     position: static;
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
-    background: #ce1126;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #7c3aed;
     border: none;
     color: #fff;
-    box-shadow: 0 2px 12px rgba(206, 17, 38, 0.4);
-    margin: 0;
+    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.35);
+    margin: -20px 8px 0;
     pointer-events: auto;
     transition: all 0.2s ease;
   }
   .home-btn:hover,
   .home-btn:active {
-    background: #e8243a;
+    background: #6d28d9;
     transform: scale(0.95) !important;
-    box-shadow: 0 2px 16px rgba(206, 17, 38, 0.5) !important;
+    box-shadow: 0 4px 20px rgba(124, 58, 237, 0.45) !important;
   }
   .home-btn svg {
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
   }
 
 
