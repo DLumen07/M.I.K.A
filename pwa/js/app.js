@@ -221,59 +221,12 @@
     });
   }
 
-  function showPopup(title, content, anchorRect) {
+  function showPopup(title, content) {
     const popup = hotspotPopup.querySelector('.popup-content');
-    popup.classList.remove('tail-top', 'tail-bottom');
     popup.style.cssText = '';
     hotspotPopup.querySelector('.popup-title').textContent = title;
     hotspotPopup.querySelector('.popup-body').textContent = content;
     hotspotPopup.classList.remove('hidden');
-    if (anchorRect) positionPopup(anchorRect);
-  }
-
-  function positionPopup(anchorRect) {
-    const popup = hotspotPopup.querySelector('.popup-content');
-    const vpW = window.innerWidth;
-    const vpH = window.innerHeight;
-
-    // Mobile: disable JS positioning so it snaps to the bottom correctly via CSS
-    if (vpW <= 600) {
-      popup.classList.remove('tail-top', 'tail-bottom');
-      popup.style.cssText = '';
-      return;
-    }
-
-    const tailH = 14;
-    const margin = 10;
-    // Measure actual rendered dimensions (handles mobile max-width)
-    const popRect = popup.getBoundingClientRect();
-    const popW = popRect.width || 300;
-    const popH = popRect.height || 185;
-
-    const ax = anchorRect.left + anchorRect.width / 2;
-
-    // Center horizontally on anchor, clamp to viewport
-    let left = ax - popW / 2;
-    left = Math.max(margin, Math.min(left, vpW - popW - margin));
-
-    // Tail X offset relative to popup left edge
-    const tailX = Math.max(16, Math.min(ax - left, popW - 16));
-
-    // Show above if there's enough room, otherwise below
-    let top, tailClass;
-    if (anchorRect.top - popH - tailH - margin > 0) {
-      top = anchorRect.top - popH - tailH;
-      tailClass = 'tail-bottom';
-    } else {
-      top = anchorRect.bottom + tailH;
-      tailClass = 'tail-top';
-    }
-    top = Math.max(margin, Math.min(top, vpH - popH - margin));
-
-    popup.classList.add(tailClass);
-    popup.style.left = left + 'px';
-    popup.style.top  = top  + 'px';
-    popup.style.setProperty('--tail-x', tailX + 'px');
   }
 
   function closePopup() {
@@ -405,7 +358,7 @@
         card.appendChild(label);
 
         card.addEventListener('click', () => {
-          showPopup(hs.title, hs.content, card.getBoundingClientRect());
+          showPopup(hs.title, hs.content);
         });
 
         grid.appendChild(card);
@@ -435,7 +388,7 @@
         marker.style.top = hs.y + '%';
 
         marker.addEventListener('click', () => {
-          showPopup(hs.title, hs.content, marker.getBoundingClientRect());
+          showPopup(hs.title, hs.content);
         });
 
         wrapper.appendChild(marker);
