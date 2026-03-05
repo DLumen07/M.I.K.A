@@ -400,6 +400,10 @@
   function renderDragDrop(view, activity) {
     view.classList.add('view-drag-drop');
 
+    // Check if this is a text-only activity (no images in slides)
+    const hasImages = activity.slides.some(s => s.sentences.some(sen => sen.image));
+    if (!hasImages) view.classList.add('dd-text-only');
+
     // Panuto — shown as popup overlay when activity opens
     if (activity.instruction) {
       const overlay = document.createElement('div');
