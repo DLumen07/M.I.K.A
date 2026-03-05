@@ -1,5 +1,5 @@
 // Aralin 1 PWA - Service Worker
-const CACHE_NAME = 'aralin1-v31';
+const CACHE_NAME = 'aralin1-v32';
 const ASSETS = [
   './',
   './index.html',

@@ -452,6 +452,8 @@ body::before {
   -ms-overflow-style: none;
   display: flex;
   flex-direction: column;
+}
+.dd-text-only .dd-scroll-container {
   justify-content: center;
 }
 .dd-scroll-container::-webkit-scrollbar { display: none; }
