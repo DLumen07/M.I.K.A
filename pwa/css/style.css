@@ -735,6 +735,19 @@ body::before {
   .nav-arrow-btn { width: 56px; height: 56px; }
   .nav-arrow-btn svg { width: 30px; height: 30px; }
   
+  .dd-img-container .dd-words {
+    max-width: 96%;
+    flex-wrap: nowrap;
+    gap: 5px;
+    padding: 6px 8px;
+  }
+  .dd-img-container .dd-word {
+    font-size: 11px;
+    padding: 5px 8px;
+    white-space: nowrap;
+    flex-shrink: 1;
+    min-width: 0;
+  }
   .dd-word { font-size: 15px; padding: 8px 16px; }
   .quiz-card { padding: 24px; }
   .quiz-question { font-size: 18px; }
