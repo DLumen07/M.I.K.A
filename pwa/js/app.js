@@ -401,7 +401,7 @@
 
         const label = document.createElement('div');
         label.className = 'hotspot-card-label';
-        label.innerHTML = '<span class="hotspot-card-icon">+</span> ' + hs.title;
+        label.innerHTML = `<span class="hotspot-card-btn"><span class="hotspot-card-btn-ring"></span>+</span><span class="hotspot-card-title">${hs.title}</span>`;
         card.appendChild(label);
 
         card.addEventListener('click', () => {

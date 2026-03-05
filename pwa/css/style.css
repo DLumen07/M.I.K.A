@@ -299,31 +299,52 @@ body::before {
 }
 .hotspot-card-label {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(transparent, rgba(30, 15, 10, 0.85));
-  color: #fff;
-  padding: 20px 14px 10px;
-  font-weight: 700;
-  font-size: 15px;
+  top: 0; left: 0; right: 0; bottom: 0;
   display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.hotspot-card-icon {
-  display: inline-flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.15);
+  transition: background 0.25s;
+}
+.hotspot-card:active .hotspot-card-label {
+  background: rgba(0, 0, 0, 0.3);
+}
+.hotspot-card-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
-  background: #ffb74d;
+  background: linear-gradient(135deg, #ffb74d, #ff9800);
   color: #bf360c;
+  font-weight: 900;
+  font-size: 26px;
+  border: 3px solid #fff;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  z-index: 1;
+}
+.hotspot-card-btn-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 183, 77, 0.6);
+  animation: hotspotCardPulse 2s ease-in-out infinite;
+}
+@keyframes hotspotCardPulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.25); opacity: 0; }
+}
+.hotspot-card-title {
+  color: #fff;
   font-weight: 800;
   font-size: 16px;
-  border: 2px solid #fff;
-  flex-shrink: 0;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 /* ===== HOTSPOT POPUP ===== */
