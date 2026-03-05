@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">MIKA Aralin 1</string>
-    <string name="title_activity_main">MIKA Aralin 1</string>
+    <string name="app_name">M.I.K.A</string>
+    <string name="title_activity_main">M.I.K.A</string>
     <string name="package_name">com.mika.aralin1</string>
     <string name="custom_url_scheme">com.mika.aralin1</string>
 </resources>

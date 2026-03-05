@@ -16,7 +16,7 @@
   },
   "build": {
     "appId": "com.mika.aralin1",
-    "productName": "MIKA Aralin 1",
+    "productName": "M.I.K.A",
     "directories": {
       "output": "dist"
     },

@@ -63,6 +63,28 @@
     setupPopup();
     setupDashboard();
     initProgressDots();
+
+    // Restore navigation state after refresh
+    restoreState();
+  }
+
+  function saveState(inActivity, index) {
+    try {
+      sessionStorage.setItem('mika_state', JSON.stringify({ inActivity, index }));
+    } catch(e) {}
+  }
+
+  function restoreState() {
+    try {
+      const raw = sessionStorage.getItem('mika_state');
+      if (!raw) return;
+      const state = JSON.parse(raw);
+      if (state.inActivity && state.index >= 0 && state.index < ACTIVITIES.length) {
+        dashboard.classList.add('hidden');
+        app.classList.remove('hidden');
+        navigateTo(state.index);
+      }
+    } catch(e) {}
   }
 
   function showDashboard() {
@@ -80,6 +102,7 @@
     if (dashboard.classList.contains('hidden')) {
         dashboard.classList.remove('hidden');
     }
+    saveState(false, 0);
   }
 
   function setupDashboard() {
@@ -165,6 +188,7 @@
     selectedWord = null;
     currentSlide = 0;
     currentActivity = index;
+    saveState(true, index);
 
     // Update navigation arrows
     const prevBtn = $('#prevBtn');

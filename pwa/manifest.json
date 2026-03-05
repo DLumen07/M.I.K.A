@@ -1,7 +1,7 @@
 {
-  "name": "Aralin 1 - Filipino",
-  "short_name": "Aralin 1",
-  "description": "Interactive Filipino vocabulary learning - Aralin 1",
+  "name": "M.I.K.A",
+  "short_name": "M.I.K.A",
+  "description": "M.I.K.A - Makabagong Interaktibong Kaalaman sa Antas ng Bokabularyo",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "any",
