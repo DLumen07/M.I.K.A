@@ -1,0 +1,28 @@
+{
+  "name": "Aralin 1 - Filipino",
+  "short_name": "Aralin 1",
+  "description": "Interactive Filipino vocabulary learning - Aralin 1",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#5d4037",
+  "theme_color": "#5d4037",
+  "lang": "fil",
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
