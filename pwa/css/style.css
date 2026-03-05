@@ -283,14 +283,20 @@ body::before {
   border-radius: 14px;
   overflow: hidden;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
-  border: 3px solid #8d6e63;
+  box-shadow: 0 0 12px rgba(255, 183, 77, 0.5), 0 0 30px rgba(255, 152, 0, 0.3), 0 4px 14px rgba(0,0,0,0.35);
+  border: 3px solid #ffb74d;
   transition: transform 0.2s, box-shadow 0.2s;
   background: #3e2723;
+  animation: cardGlow 2.5s ease-in-out infinite;
+}
+@keyframes cardGlow {
+  0%, 100% { box-shadow: 0 0 12px rgba(255, 183, 77, 0.5), 0 0 30px rgba(255, 152, 0, 0.3), 0 4px 14px rgba(0,0,0,0.35); }
+  50% { box-shadow: 0 0 20px rgba(255, 183, 77, 0.7), 0 0 45px rgba(255, 152, 0, 0.4), 0 4px 14px rgba(0,0,0,0.35); }
 }
 .hotspot-card:active {
   transform: scale(0.97);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 0 8px rgba(255, 183, 77, 0.4), 0 2px 8px rgba(0,0,0,0.3);
+  animation: none;
 }
 .hotspot-card img {
   width: 100%;
