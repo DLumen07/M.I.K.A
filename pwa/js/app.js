@@ -359,26 +359,28 @@
   function renderHotspots(view, activity) {
     view.classList.add('view-hotspots');
 
-    // Add Instruction Overlay
+    // Panuto — shown as popup overlay when activity opens
     if (activity.instruction) {
-      const instr = document.createElement('div');
-      instr.className = 'hotspot-instruction';
-      
-      const ribbonText = activity.title; // Use title (e.g. "Aktibiti 2")
       let bodyText = activity.instruction;
-      
-      // Optional: Bold "Panuto:" if present
       if (bodyText.startsWith('Panuto:')) {
         bodyText = '<strong>Panuto:</strong> ' + bodyText.substring(7);
       }
-
-      instr.innerHTML = `
-        <div class="instr-inner">
-          <div class="instr-ribbon">${ribbonText}</div>
-          <div class="instr-text">${bodyText}</div>
+      const overlay = document.createElement('div');
+      overlay.className = 'dd-panuto-overlay';
+      overlay.innerHTML = `
+        <div class="dd-panuto-modal">
+          <div class="dd-panuto-ribbon">${activity.title}</div>
+          <div class="dd-panuto-body">${bodyText}</div>
+          <button class="dd-panuto-close">OK, Simulan!</button>
         </div>
       `;
-      view.appendChild(instr);
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay || e.target.classList.contains('dd-panuto-close')) {
+          overlay.classList.add('dd-panuto-hide');
+          setTimeout(() => overlay.remove(), 300);
+        }
+      });
+      view.appendChild(overlay);
     }
 
     const container = document.createElement('div');
