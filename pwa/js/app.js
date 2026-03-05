@@ -566,46 +566,78 @@
         btn.classList.remove('dragging');
       });
 
-      // Touch drag support
+      // Touch support: tap to select OR drag to drop
       let touchClone = null;
+      let touchStartX = 0, touchStartY = 0;
+      let isDragging = false;
+      const DRAG_THRESHOLD = 10; // px movement before switching to drag mode
+
       btn.addEventListener('touchstart', (e) => {
         if (btn.classList.contains('used')) return;
-        e.preventDefault();
         const touch = e.touches[0];
-        touchClone = btn.cloneNode(true);
-        touchClone.classList.add('dd-word-ghost');
-        touchClone.style.position = 'fixed';
-        touchClone.style.left = (touch.clientX - 40) + 'px';
-        touchClone.style.top = (touch.clientY - 20) + 'px';
-        touchClone.style.zIndex = '9999';
-        touchClone.style.pointerEvents = 'none';
-        touchClone.style.opacity = '0.85';
-        document.body.appendChild(touchClone);
-        btn.classList.add('dragging');
-        section.querySelectorAll('.dd-drop-zone:not(.correct)').forEach(z => z.classList.add('highlight'));
-      }, { passive: false });
+        touchStartX = touch.clientX;
+        touchStartY = touch.clientY;
+        isDragging = false;
+        touchClone = null;
+      }, { passive: true });
 
       btn.addEventListener('touchmove', (e) => {
-        if (!touchClone) return;
-        e.preventDefault();
+        if (btn.classList.contains('used')) return;
         const touch = e.touches[0];
-        touchClone.style.left = (touch.clientX - 40) + 'px';
-        touchClone.style.top = (touch.clientY - 20) + 'px';
+        const dx = touch.clientX - touchStartX;
+        const dy = touch.clientY - touchStartY;
+
+        // Start drag only after moving past threshold
+        if (!isDragging && (Math.abs(dx) > DRAG_THRESHOLD || Math.abs(dy) > DRAG_THRESHOLD)) {
+          isDragging = true;
+          e.preventDefault();
+          touchClone = btn.cloneNode(true);
+          touchClone.classList.add('dd-word-ghost');
+          touchClone.style.position = 'fixed';
+          touchClone.style.left = (touch.clientX - 40) + 'px';
+          touchClone.style.top = (touch.clientY - 20) + 'px';
+          touchClone.style.zIndex = '9999';
+          touchClone.style.pointerEvents = 'none';
+          touchClone.style.opacity = '0.85';
+          document.body.appendChild(touchClone);
+          btn.classList.add('dragging');
+          section.querySelectorAll('.dd-drop-zone:not(.correct)').forEach(z => z.classList.add('highlight'));
+        }
+
+        if (isDragging && touchClone) {
+          e.preventDefault();
+          touchClone.style.left = (touch.clientX - 40) + 'px';
+          touchClone.style.top = (touch.clientY - 20) + 'px';
+        }
       }, { passive: false });
 
       btn.addEventListener('touchend', (e) => {
-        if (!touchClone) return;
-        const touch = e.changedTouches[0];
-        if (touchClone.parentNode) touchClone.parentNode.removeChild(touchClone);
-        touchClone = null;
-        btn.classList.remove('dragging');
-        section.querySelectorAll('.dd-drop-zone').forEach(z => z.classList.remove('highlight'));
+        if (btn.classList.contains('used')) return;
 
-        const target = document.elementFromPoint(touch.clientX, touch.clientY);
-        const zone = target && (target.classList.contains('dd-drop-zone') ? target : target.closest('.dd-drop-zone'));
-        if (zone && !zone.classList.contains('correct')) {
-          placeWord(zone, word, usedWords);
+        if (isDragging && touchClone) {
+          // Finish drag — drop on zone under finger
+          const touch = e.changedTouches[0];
+          if (touchClone.parentNode) touchClone.parentNode.removeChild(touchClone);
+          touchClone = null;
+          btn.classList.remove('dragging');
+          section.querySelectorAll('.dd-drop-zone').forEach(z => z.classList.remove('highlight'));
+
+          const target = document.elementFromPoint(touch.clientX, touch.clientY);
+          const zone = target && (target.classList.contains('dd-drop-zone') ? target : target.closest('.dd-drop-zone'));
+          if (zone && !zone.classList.contains('correct')) {
+            placeWord(zone, word, usedWords);
+          }
+        } else {
+          // Tap — toggle select (same as click)
+          section.querySelectorAll('.dd-word').forEach(b => b.classList.remove('selected'));
+          if (sectionSelectedWord === word) {
+            sectionSelectedWord = null;
+          } else {
+            sectionSelectedWord = word;
+            btn.classList.add('selected');
+          }
         }
+        isDragging = false;
       });
 
       btn.addEventListener('click', () => {
