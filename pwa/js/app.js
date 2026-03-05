@@ -439,6 +439,126 @@
       view.appendChild(overlay);
     }
 
+    // Shared state across all slides
+    const sharedState = {
+      usedWords: new Set(),
+      selectedWord: null
+    };
+
+    // Collect all unique words from the activity
+    const allWords = new Set(activity.words || []);
+    activity.slides.forEach(slide => {
+      if (slide.words) slide.words.forEach(w => allWords.add(w));
+    });
+
+    // Shared word choices header — sticky above scroll
+    const wordsDiv = document.createElement('div');
+    wordsDiv.classList.add('dd-words');
+    const shuffled = [...allWords].sort(() => Math.random() - 0.5);
+    shuffled.forEach(word => {
+      const btn = document.createElement('button');
+      btn.classList.add('dd-word');
+      btn.textContent = word;
+      btn.dataset.word = word;
+      btn.draggable = true;
+
+      // HTML5 drag start
+      btn.addEventListener('dragstart', (e) => {
+        if (btn.classList.contains('used')) { e.preventDefault(); return; }
+        e.dataTransfer.setData('text/plain', word);
+        e.dataTransfer.effectAllowed = 'move';
+        btn.classList.add('dragging');
+      });
+      btn.addEventListener('dragend', () => {
+        btn.classList.remove('dragging');
+      });
+
+      // Touch support: tap to select OR drag to drop
+      let touchClone = null;
+      let touchStartX = 0, touchStartY = 0;
+      let isDragging = false;
+      const DRAG_THRESHOLD = 10;
+
+      btn.addEventListener('touchstart', (e) => {
+        if (btn.classList.contains('used')) return;
+        const touch = e.touches[0];
+        touchStartX = touch.clientX;
+        touchStartY = touch.clientY;
+        isDragging = false;
+        touchClone = null;
+      }, { passive: true });
+
+      btn.addEventListener('touchmove', (e) => {
+        if (btn.classList.contains('used')) return;
+        const touch = e.touches[0];
+        const dx = touch.clientX - touchStartX;
+        const dy = touch.clientY - touchStartY;
+
+        if (!isDragging && (Math.abs(dx) > DRAG_THRESHOLD || Math.abs(dy) > DRAG_THRESHOLD)) {
+          isDragging = true;
+          e.preventDefault();
+          touchClone = btn.cloneNode(true);
+          touchClone.classList.add('dd-word-ghost');
+          touchClone.style.position = 'fixed';
+          touchClone.style.left = (touch.clientX - 40) + 'px';
+          touchClone.style.top = (touch.clientY - 20) + 'px';
+          touchClone.style.zIndex = '9999';
+          touchClone.style.pointerEvents = 'none';
+          touchClone.style.opacity = '0.85';
+          document.body.appendChild(touchClone);
+          btn.classList.add('dragging');
+          view.querySelectorAll('.dd-drop-zone:not(.correct)').forEach(z => z.classList.add('highlight'));
+        }
+
+        if (isDragging && touchClone) {
+          e.preventDefault();
+          touchClone.style.left = (touch.clientX - 40) + 'px';
+          touchClone.style.top = (touch.clientY - 20) + 'px';
+        }
+      }, { passive: false });
+
+      btn.addEventListener('touchend', (e) => {
+        if (btn.classList.contains('used')) return;
+
+        if (isDragging && touchClone) {
+          const touch = e.changedTouches[0];
+          if (touchClone.parentNode) touchClone.parentNode.removeChild(touchClone);
+          touchClone = null;
+          btn.classList.remove('dragging');
+          view.querySelectorAll('.dd-drop-zone').forEach(z => z.classList.remove('highlight'));
+
+          const target = document.elementFromPoint(touch.clientX, touch.clientY);
+          const zone = target && (target.classList.contains('dd-drop-zone') ? target : target.closest('.dd-drop-zone'));
+          if (zone && !zone.classList.contains('correct')) {
+            placeWord(zone, word, sharedState.usedWords, wordsDiv);
+          }
+        } else {
+          wordsDiv.querySelectorAll('.dd-word').forEach(b => b.classList.remove('selected'));
+          if (sharedState.selectedWord === word) {
+            sharedState.selectedWord = null;
+          } else {
+            sharedState.selectedWord = word;
+            btn.classList.add('selected');
+          }
+        }
+        isDragging = false;
+      });
+
+      btn.addEventListener('click', () => {
+        if (btn.classList.contains('used')) return;
+        wordsDiv.querySelectorAll('.dd-word').forEach(b => b.classList.remove('selected'));
+        if (sharedState.selectedWord === word) {
+          sharedState.selectedWord = null;
+        } else {
+          sharedState.selectedWord = word;
+          btn.classList.add('selected');
+        }
+      });
+
+      wordsDiv.appendChild(btn);
+    });
+    view.appendChild(wordsDiv);
+
     // Scroll-snap container — all slides stacked vertically
     const scrollContainer = document.createElement('div');
     scrollContainer.className = 'dd-scroll-container';
@@ -446,15 +566,12 @@
 
     // Render all slides at once as scroll-snap sections
     activity.slides.forEach((_, slideIndex) => {
-      buildSlideSection(scrollContainer, activity, slideIndex);
+      buildSlideSection(scrollContainer, activity, slideIndex, sharedState, wordsDiv);
     });
   }
 
-  function buildSlideSection(scrollContainer, activity, slideIndex) {
-    let sectionSelectedWord = null;
+  function buildSlideSection(scrollContainer, activity, slideIndex, sharedState, wordsDiv) {
     const slide = activity.slides[slideIndex];
-    const words = slide.words || activity.words;
-    const usedWords = new Set();
     const dropZones = [];
 
     // Section — one scroll-snap point per slide
@@ -519,22 +636,22 @@
         zone.classList.remove('highlight');
         const word = e.dataTransfer.getData('text/plain');
         if (word && !zone.classList.contains('correct')) {
-          placeWord(zone, word, usedWords);
+          placeWord(zone, word, sharedState.usedWords, wordsDiv);
         }
       });
 
-      // Click to remove placed word, or place selected word (click fallback)
+      // Click to remove placed word, or place selected word
       zone.addEventListener('click', () => {
-        if (sectionSelectedWord && !zone.classList.contains('correct')) {
-          placeWord(zone, sectionSelectedWord, usedWords);
-          sectionSelectedWord = null;
+        if (sharedState.selectedWord && !zone.classList.contains('correct')) {
+          placeWord(zone, sharedState.selectedWord, sharedState.usedWords, wordsDiv);
+          sharedState.selectedWord = null;
         } else if (zone.classList.contains('filled') && !zone.classList.contains('correct')) {
           const word = zone.dataset.placed;
-          usedWords.delete(word);
+          sharedState.usedWords.delete(word);
           zone.innerHTML = '';
           zone.classList.remove('filled');
           delete zone.dataset.placed;
-          updateWordButtons(section, usedWords);
+          updateWordButtons(wordsDiv, sharedState.usedWords);
         }
       });
 
@@ -544,119 +661,6 @@
 
     contentWrapper.appendChild(sentencesDiv);
     section.appendChild(contentWrapper);
-
-    // Word choices — placed at top of section for easy access
-    const wordsDiv = document.createElement('div');
-    wordsDiv.classList.add('dd-words');
-    // Insert words at the top of the section (before image/content)
-    section.insertBefore(wordsDiv, section.firstChild);
-
-    const shuffled = [...words].sort(() => Math.random() - 0.5);
-    shuffled.forEach(word => {
-      const btn = document.createElement('button');
-      btn.classList.add('dd-word');
-      btn.textContent = word;
-      btn.dataset.word = word;
-      btn.draggable = true;
-
-      // HTML5 drag start
-      btn.addEventListener('dragstart', (e) => {
-        if (btn.classList.contains('used')) { e.preventDefault(); return; }
-        e.dataTransfer.setData('text/plain', word);
-        e.dataTransfer.effectAllowed = 'move';
-        btn.classList.add('dragging');
-      });
-      btn.addEventListener('dragend', () => {
-        btn.classList.remove('dragging');
-      });
-
-      // Touch support: tap to select OR drag to drop
-      let touchClone = null;
-      let touchStartX = 0, touchStartY = 0;
-      let isDragging = false;
-      const DRAG_THRESHOLD = 10; // px movement before switching to drag mode
-
-      btn.addEventListener('touchstart', (e) => {
-        if (btn.classList.contains('used')) return;
-        const touch = e.touches[0];
-        touchStartX = touch.clientX;
-        touchStartY = touch.clientY;
-        isDragging = false;
-        touchClone = null;
-      }, { passive: true });
-
-      btn.addEventListener('touchmove', (e) => {
-        if (btn.classList.contains('used')) return;
-        const touch = e.touches[0];
-        const dx = touch.clientX - touchStartX;
-        const dy = touch.clientY - touchStartY;
-
-        // Start drag only after moving past threshold
-        if (!isDragging && (Math.abs(dx) > DRAG_THRESHOLD || Math.abs(dy) > DRAG_THRESHOLD)) {
-          isDragging = true;
-          e.preventDefault();
-          touchClone = btn.cloneNode(true);
-          touchClone.classList.add('dd-word-ghost');
-          touchClone.style.position = 'fixed';
-          touchClone.style.left = (touch.clientX - 40) + 'px';
-          touchClone.style.top = (touch.clientY - 20) + 'px';
-          touchClone.style.zIndex = '9999';
-          touchClone.style.pointerEvents = 'none';
-          touchClone.style.opacity = '0.85';
-          document.body.appendChild(touchClone);
-          btn.classList.add('dragging');
-          section.querySelectorAll('.dd-drop-zone:not(.correct)').forEach(z => z.classList.add('highlight'));
-        }
-
-        if (isDragging && touchClone) {
-          e.preventDefault();
-          touchClone.style.left = (touch.clientX - 40) + 'px';
-          touchClone.style.top = (touch.clientY - 20) + 'px';
-        }
-      }, { passive: false });
-
-      btn.addEventListener('touchend', (e) => {
-        if (btn.classList.contains('used')) return;
-
-        if (isDragging && touchClone) {
-          // Finish drag — drop on zone under finger
-          const touch = e.changedTouches[0];
-          if (touchClone.parentNode) touchClone.parentNode.removeChild(touchClone);
-          touchClone = null;
-          btn.classList.remove('dragging');
-          section.querySelectorAll('.dd-drop-zone').forEach(z => z.classList.remove('highlight'));
-
-          const target = document.elementFromPoint(touch.clientX, touch.clientY);
-          const zone = target && (target.classList.contains('dd-drop-zone') ? target : target.closest('.dd-drop-zone'));
-          if (zone && !zone.classList.contains('correct')) {
-            placeWord(zone, word, usedWords);
-          }
-        } else {
-          // Tap — toggle select (same as click)
-          section.querySelectorAll('.dd-word').forEach(b => b.classList.remove('selected'));
-          if (sectionSelectedWord === word) {
-            sectionSelectedWord = null;
-          } else {
-            sectionSelectedWord = word;
-            btn.classList.add('selected');
-          }
-        }
-        isDragging = false;
-      });
-
-      btn.addEventListener('click', () => {
-        if (btn.classList.contains('used')) return;
-        section.querySelectorAll('.dd-word').forEach(b => b.classList.remove('selected'));
-        if (sectionSelectedWord === word) {
-          sectionSelectedWord = null;
-        } else {
-          sectionSelectedWord = word;
-          btn.classList.add('selected');
-        }
-      });
-
-      wordsDiv.appendChild(btn);
-    });
 
     // Controls (Suriin/Ulitin)
     const controls = document.createElement('div');
@@ -671,7 +675,14 @@
     const resetBtn = document.createElement('button');
     resetBtn.classList.add('dd-reset-btn');
     resetBtn.textContent = 'Ulitin';
-    resetBtn.addEventListener('click', () => buildSlideSection(scrollContainer, activity, slideIndex));
+    resetBtn.addEventListener('click', () => {
+      // Clear used words for this section's zones
+      section.querySelectorAll('.dd-drop-zone').forEach(z => {
+        if (z.dataset.placed) sharedState.usedWords.delete(z.dataset.placed);
+      });
+      updateWordButtons(wordsDiv, sharedState.usedWords);
+      buildSlideSection(scrollContainer, activity, slideIndex, sharedState, wordsDiv);
+    });
     controls.appendChild(resetBtn);
 
     section.appendChild(controls);
@@ -686,7 +697,7 @@
     }
   }
 
-  function placeWord(zone, word, usedWords) {
+  function placeWord(zone, word, usedWords, wordsDiv) {
     // Remove any existing word in this zone
     if (zone.dataset.placed) {
       usedWords.delete(zone.dataset.placed);
@@ -698,13 +709,12 @@
     usedWords.add(word);
 
     // Update word buttons
-    const panelEl = zone.closest('.dd-scroll-section');
-    panelEl.querySelectorAll('.dd-word').forEach(b => b.classList.remove('selected'));
-    updateWordButtons(panelEl, usedWords);
+    wordsDiv.querySelectorAll('.dd-word').forEach(b => b.classList.remove('selected'));
+    updateWordButtons(wordsDiv, usedWords);
   }
 
-  function updateWordButtons(view, usedWords) {
-    view.querySelectorAll('.dd-word').forEach(btn => {
+  function updateWordButtons(wordsDiv, usedWords) {
+    wordsDiv.querySelectorAll('.dd-word').forEach(btn => {
       btn.classList.toggle('used', usedWords.has(btn.dataset.word));
     });
   }

@@ -491,20 +491,18 @@ body::before {
   background: transparent; padding: 6px 18px;
 }
 
-/* Word choices area */
+/* Word choices area — fixed header above scroll */
 .dd-words {
   display: flex; flex-wrap: wrap; gap: 8px;
   justify-content: center; padding: 10px 4%;
   width: 100%;
   max-width: 920px;
   box-sizing: border-box;
-  position: sticky;
-  top: 0;
+  flex-shrink: 0;
   z-index: 50;
   background: linear-gradient(135deg, #4e342e 0%, #5d4037 50%, #4e342e 100%);
   border: 2px solid #8d6e63;
-  border-radius: 12px;
-  margin-bottom: 8px;
+  border-radius: 0 0 12px 12px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 .dd-word {
