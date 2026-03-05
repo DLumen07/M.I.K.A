@@ -17,16 +17,16 @@ const ACTIVITIES = [
     type: 'hotspots',
     instruction: 'Panuto: Pindutin ang bahagi ng larawan upang malaman ang angkop na salita, kahulugan, at pangungusap.',
     bg: 'assets/images/3.png',
-    bgWidth: 1536, bgHeight: 1024,
+    bgWidth: 1000, bgHeight: 499,
     // hotspotColor: '#1d5999', // REMOVED to use CSS theme (Bamboo/Orange)
     hotspots: [
       {
-        x: 31, y: 72, // Updated position for Left Boy (Yellow/Lumbay)
+        x: 25.7, y: 72, // Left Boy (Yellow/Lumbay)
         title: 'LUMBAY',
         content: 'Kahulugan: Matinding kalungkutan\n\nPangungusap: Ramdam niya ang lumbay habang nakaupo.'
       },
       {
-        x: 69, y: 72, // Updated position for Right Boy (Blue/Nangangamba)
+        x: 74.3, y: 72, // Right Boy (Blue/Nangangamba)
         title: 'NANGANGAMBA',
         content: 'Kahulugan: Nakararamdam ng takot\n\nPangungusap: Nangangamba ako dahil sa paparating na bagyo.'
       }
@@ -39,21 +39,21 @@ const ACTIVITIES = [
     type: 'hotspots',
     instruction: 'Panuto: Pindutin ang bahagi ng larawan upang malaman ang angkop na salita, kahulugan, at pangungusap.',
     bg: 'assets/images/2.png',
-    bgWidth: 1536, bgHeight: 1024,
+    bgWidth: 1000, bgHeight: 499,
     // hotspotColor: '#1d3399', // REMOVED to be consistent with theme
     hotspots: [
       {
-        x: 18, y: 70.106,
+        x: 9, y: 70.106,
         title: 'Pagliyag',
         content: 'Kahulugan: Pagkagusto o paghanga sa isang tao o bagay.\n\nHalimbawa: Nakaramdam si Juana ng pagliyag kay Don Juan.'
       },
       {
-        x: 52.4, y: 52.116,
+        x: 53.1, y: 52.116,
         title: 'Hungkag',
         content: 'Kahulugan: Walang laman o pakiramdam na walang kabuluhan.\n\nHalimbawa: Naging hungkag ang kanyang pakiramdam dahil sa panagimpan.'
       },
       {
-        x: 78.8, y: 68.197,
+        x: 86.9, y: 68.197,
         title: 'Malasutla',
         content: 'Kahulugan: Makinis at malambot na parang seda.\n\nHalimbawa: Malasutla ang buhok ni Maria Blanca matapos suklayin.'
       }
