@@ -454,7 +454,11 @@ body::before {
   flex-direction: column;
 }
 .dd-text-only .dd-scroll-container {
-  justify-content: center;
+  /* no centering here — handled by section margin */
+}
+.dd-text-only .dd-scroll-section {
+  margin-top: auto;
+  margin-bottom: auto;
 }
 .dd-scroll-container::-webkit-scrollbar { display: none; }
 /* Each slide section */
