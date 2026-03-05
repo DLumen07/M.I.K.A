@@ -270,16 +270,18 @@ body::before {
 /* ===== HOTSPOT CARDS (individual images) ===== */
 .hotspot-cards {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 14px;
   width: 95%;
-  max-width: 500px;
+  max-width: 1200px;
   padding: 10px 0;
-  align-items: center;
+  align-items: stretch;
+  justify-content: center;
 }
 .hotspot-card {
   position: relative;
-  width: 100%;
+  flex: 1;
+  min-width: 0;
   border-radius: 14px;
   overflow: hidden;
   cursor: pointer;
@@ -880,6 +882,16 @@ body::before {
   
   .audio-btn { width: 50px; height: 50px; }
   .dash-card { width: 100%; max-width: 320px; }
+
+  .hotspot-cards {
+    flex-direction: column;
+    max-width: 500px;
+    overflow-y: auto;
+  }
+  .hotspot-card {
+    flex: none;
+    width: 100%;
+  }
 }
 
 @media (max-height: 500px) {
