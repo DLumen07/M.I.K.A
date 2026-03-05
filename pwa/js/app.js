@@ -419,17 +419,24 @@
   function renderDragDrop(view, activity) {
     view.classList.add('view-drag-drop');
 
-    // Panuto — above the scroll container, always visible
+    // Panuto — shown as popup overlay when activity opens
     if (activity.instruction) {
-      const instr = document.createElement('div');
-      instr.className = 'hotspot-instruction';
-      instr.innerHTML = `
-        <div class="instr-inner">
-          <div class="instr-ribbon">${activity.title}</div>
-          <div class="instr-text"><strong>Panuto:</strong> ${activity.instruction}</div>
+      const overlay = document.createElement('div');
+      overlay.className = 'dd-panuto-overlay';
+      overlay.innerHTML = `
+        <div class="dd-panuto-modal">
+          <div class="dd-panuto-ribbon">${activity.title}</div>
+          <div class="dd-panuto-body"><strong>Panuto:</strong> ${activity.instruction}</div>
+          <button class="dd-panuto-close">OK, Simulan!</button>
         </div>
       `;
-      view.appendChild(instr);
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay || e.target.classList.contains('dd-panuto-close')) {
+          overlay.classList.add('dd-panuto-hide');
+          setTimeout(() => overlay.remove(), 300);
+        }
+      });
+      view.appendChild(overlay);
     }
 
     // Scroll-snap container — all slides stacked vertically
@@ -538,14 +545,11 @@
     contentWrapper.appendChild(sentencesDiv);
     section.appendChild(contentWrapper);
 
-    // Word choices — overlaid on image if present, otherwise below content
+    // Word choices — placed at top of section for easy access
     const wordsDiv = document.createElement('div');
     wordsDiv.classList.add('dd-words');
-    if (imgContainer) {
-      imgContainer.appendChild(wordsDiv);
-    } else {
-      section.appendChild(wordsDiv);
-    }
+    // Insert words at the top of the section (before image/content)
+    section.insertBefore(wordsDiv, section.firstChild);
 
     const shuffled = [...words].sort(() => Math.random() - 0.5);
     shuffled.forEach(word => {
