@@ -243,10 +243,10 @@ body::before {
 
 /* Ensure image doesn't exceed container height */
 .hotspot-container-center img.bg-image {
-  max-height: 100vh; /* Stretched height for larger view */
+  max-height: 100vh;
   height: 100%;
   width: 100%;
-  object-fit: fill; /* STRETCH THE IMAGE */
+  object-fit: contain; /* preserve aspect ratio, no stretching */
 }
 
 .hotspot-marker {
