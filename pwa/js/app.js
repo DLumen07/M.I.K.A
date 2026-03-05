@@ -383,38 +383,64 @@
       view.appendChild(overlay);
     }
 
-    const container = document.createElement('div');
-    container.className = 'hotspot-container-center';
-    view.appendChild(container);
+    // Check if hotspots have individual images (card layout) vs single bg image
+    if (activity.hotspots[0] && activity.hotspots[0].img) {
+      const grid = document.createElement('div');
+      grid.className = 'hotspot-cards';
+      view.appendChild(grid);
 
-    const wrapper = document.createElement('div');
-    wrapper.classList.add('hotspot-wrapper');
-    container.appendChild(wrapper);
+      activity.hotspots.forEach(hs => {
+        const card = document.createElement('div');
+        card.className = 'hotspot-card';
 
-    const img = document.createElement('img');
-    img.classList.add('bg-image');
-    img.src = activity.bg;
-    img.alt = activity.title;
-    img.draggable = false;
-    wrapper.appendChild(img);
+        const img = document.createElement('img');
+        img.src = hs.img;
+        img.alt = hs.title;
+        img.draggable = false;
+        card.appendChild(img);
 
-    activity.hotspots.forEach(hs => {
-      const marker = document.createElement('button');
-      marker.classList.add('hotspot-marker');
-      // marker.style.backgroundColor = activity.hotspotColor; // Use CSS theme instead
-      marker.innerHTML = '+';
-      marker.title = hs.title;
-      marker.style.left = hs.x + '%';
-      marker.style.top = hs.y + '%';
+        const label = document.createElement('div');
+        label.className = 'hotspot-card-label';
+        label.innerHTML = '<span class="hotspot-card-icon">+</span> ' + hs.title;
+        card.appendChild(label);
 
-      marker.addEventListener('click', () => {
-        showPopup(hs.title, hs.content, marker.getBoundingClientRect());
+        card.addEventListener('click', () => {
+          showPopup(hs.title, hs.content, card.getBoundingClientRect());
+        });
+
+        grid.appendChild(card);
       });
+    } else {
+      const container = document.createElement('div');
+      container.className = 'hotspot-container-center';
+      view.appendChild(container);
 
-      wrapper.appendChild(marker);
-    });
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('hotspot-wrapper');
+      container.appendChild(wrapper);
 
-    // view.appendChild(wrapper); // Removed: wrapper is now inside container
+      const img = document.createElement('img');
+      img.classList.add('bg-image');
+      img.src = activity.bg;
+      img.alt = activity.title;
+      img.draggable = false;
+      wrapper.appendChild(img);
+
+      activity.hotspots.forEach(hs => {
+        const marker = document.createElement('button');
+        marker.classList.add('hotspot-marker');
+        marker.innerHTML = '+';
+        marker.title = hs.title;
+        marker.style.left = hs.x + '%';
+        marker.style.top = hs.y + '%';
+
+        marker.addEventListener('click', () => {
+          showPopup(hs.title, hs.content, marker.getBoundingClientRect());
+        });
+
+        wrapper.appendChild(marker);
+      });
+    }
   }
 
   // ===== RENDERER: DRAG & DROP (Aktibiti 3, 5) =====

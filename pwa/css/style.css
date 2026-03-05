@@ -267,6 +267,65 @@ body::before {
   50% { box-shadow: 0 0 0 12px rgba(255, 183, 77, 0); }
 }
 
+/* ===== HOTSPOT CARDS (individual images) ===== */
+.hotspot-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 95%;
+  max-width: 500px;
+  padding: 10px 0;
+  align-items: center;
+}
+.hotspot-card {
+  position: relative;
+  width: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+  border: 3px solid #8d6e63;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background: #3e2723;
+}
+.hotspot-card:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.hotspot-card img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+.hotspot-card-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(30, 15, 10, 0.85));
+  color: #fff;
+  padding: 20px 14px 10px;
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.hotspot-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #ffb74d;
+  color: #bf360c;
+  font-weight: 800;
+  font-size: 16px;
+  border: 2px solid #fff;
+  flex-shrink: 0;
+}
+
 /* ===== HOTSPOT POPUP ===== */
 .hotspot-popup {
   position: fixed; inset: 0; z-index: 1000;

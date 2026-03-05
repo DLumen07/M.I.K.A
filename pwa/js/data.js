@@ -37,23 +37,20 @@ const ACTIVITIES = [
     title: 'Aktibiti 2.2',
     subtitle: 'Tuklasin',
     type: 'hotspots',
-    instruction: 'Panuto: Pindutin ang bahagi ng larawan upang malaman ang angkop na salita, kahulugan, at pangungusap.',
-    bg: 'assets/images/2.png',
-    bgWidth: 1000, bgHeight: 499,
-    // hotspotColor: '#1d3399', // REMOVED to be consistent with theme
+    instruction: 'Panuto: Pindutin ang larawan upang malaman ang angkop na salita, kahulugan, at pangungusap.',
     hotspots: [
       {
-        x: 9, y: 70.106,
+        img: 'assets/images/act2.2.-1.png',
         title: 'Pagliyag',
         content: 'Kahulugan: Pagkagusto o paghanga sa isang tao o bagay.\n\nHalimbawa: Nakaramdam si Juana ng pagliyag kay Don Juan.'
       },
       {
-        x: 53.1, y: 52.116,
+        img: 'assets/images/act2.2-2.png',
         title: 'Hungkag',
         content: 'Kahulugan: Walang laman o pakiramdam na walang kabuluhan.\n\nHalimbawa: Naging hungkag ang kanyang pakiramdam dahil sa panagimpan.'
       },
       {
-        x: 86.9, y: 68.197,
+        img: 'assets/images/act2.2-3.png',
         title: 'Malasutla',
         content: 'Kahulugan: Makinis at malambot na parang seda.\n\nHalimbawa: Malasutla ang buhok ni Maria Blanca matapos suklayin.'
       }
