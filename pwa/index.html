@@ -103,19 +103,22 @@
     <!-- Activity Container -->
     <main id="activityContainer" class="activity-container"></main>
 
-    <!-- Bottom Navigation Arrows -->
+    <!-- Bottom Navigation Bar -->
     <div class="nav-arrows">
-      <button id="prevBtn" class="nav-arrow-btn prev" aria-label="Previous">  
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      <button id="prevBtn" class="nav-arrow-btn prev" aria-label="Previous">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
       </button>
 
-      <!-- Home Button Overlay -->
-      <button id="btnHome" class="home-btn" title="Bumalik sa Dashboard">     
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.99 8.25a.75.75 0 1 1-1.018 1.118l-.512-.47V20.25h-5.25a.75.75 0 0 1-.75-.75v-4.5H10v4.5a.75.75 0 0 1-.75.75H4.25V12.73l-.512.47a.75.75 0 1 1-1.018-1.118l8.75-8.241z"/></svg>
-      </button>
+      <!-- Center Section: Home + Progress -->
+      <div class="nav-center">
+        <button id="btnHome" class="home-btn" title="Bumalik sa Dashboard">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.99 8.25a.75.75 0 1 1-1.018 1.118l-.512-.47V20.25h-5.25a.75.75 0 0 1-.75-.75v-4.5H10v4.5a.75.75 0 0 1-.75.75H4.25V12.73l-.512.47a.75.75 0 1 1-1.018-1.118l8.75-8.241z"/></svg>
+        </button>
+        <div class="nav-progress" id="navProgress"></div>
+      </div>
 
-      <button id="nextBtn" class="nav-arrow-btn next" aria-label="Next">      
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      <button id="nextBtn" class="nav-arrow-btn next" aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </button>
     </div>
   </div>

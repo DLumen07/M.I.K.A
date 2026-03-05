@@ -62,6 +62,7 @@
     setupFullscreen();
     setupPopup();
     setupDashboard();
+    initProgressDots();
   }
 
   function showDashboard() {
@@ -112,6 +113,27 @@
     }
   }
 
+  // ===== PROGRESS DOTS =====
+  function initProgressDots() {
+    const nav = $('#navProgress');
+    if (!nav) return;
+    nav.innerHTML = '';
+    ACTIVITIES.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+      nav.appendChild(dot);
+    });
+  }
+
+  function updateProgressDots(index) {
+    const dots = document.querySelectorAll('.nav-dot');
+    dots.forEach((dot, i) => {
+      dot.classList.remove('active', 'completed');
+      if (i === index) dot.classList.add('active');
+      else if (i < index) dot.classList.add('completed');
+    });
+  }
+
   // ===== NAVIGATION =====
   function setupNavigation() {
     const prev = $('#prevBtn');
@@ -149,6 +171,9 @@
     const nextBtn = $('#nextBtn');
     if (prevBtn) prevBtn.classList.toggle('disabled', index <= 0);
     if (nextBtn) nextBtn.classList.toggle('disabled', index >= ACTIVITIES.length - 1);
+
+    // Update progress dots
+    updateProgressDots(index);
 
     // Update header
     const activity = ACTIVITIES[index];

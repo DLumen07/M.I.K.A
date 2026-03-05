@@ -1011,29 +1011,104 @@ body::before {
 /* ===== MOBILE FOOTER REDESIGN ===== */
 @media (max-width: 600px) {
   .nav-arrows {
-    background: rgba(30, 18, 14, 0.95);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    bottom: 0; 
-    padding: 10px 20px;
-    align-items: center; 
+    background: rgba(15, 10, 8, 0.85);
+    backdrop-filter: blur(20px) saturate(1.5);
+    -webkit-backdrop-filter: blur(20px) saturate(1.5);
+    bottom: 0;
+    padding: 8px 16px;
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+    align-items: center;
+    justify-content: space-between;
     pointer-events: auto;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
     z-index: 1000;
-  }
-  
-  .home-btn {
-    position: static; 
-    width: 60px; 
-    height: 60px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    margin: 0;
-    pointer-events: auto;
+    gap: 0;
   }
 
+  /* Center section */
+  .nav-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    max-width: 200px;
+  }
+
+  /* Progress dots */
+  .nav-progress {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .nav-dot.active {
+    width: 18px;
+    border-radius: 4px;
+    background: #fcd116;
+    box-shadow: 0 0 8px rgba(252, 209, 22, 0.4);
+  }
+  .nav-dot.completed {
+    background: rgba(252, 209, 22, 0.5);
+  }
+
+  /* Modern arrow buttons */
   .nav-arrow-btn {
-    width: 50px; 
-    height: 50px;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    box-shadow: none;
+    transition: all 0.2s ease;
+  }
+  .nav-arrow-btn:hover,
+  .nav-arrow-btn:active {
+    background: rgba(255, 255, 255, 0.15) !important;
+    transform: scale(0.95) !important;
+    box-shadow: none !important;
+  }
+  .nav-arrow-btn svg {
+    width: 22px;
+    height: 22px;
+  }
+  .nav-arrow-btn.disabled {
+    opacity: 0.25;
+    pointer-events: none;
+    transform: none;
+  }
+
+  /* Modern home button */
+  .home-btn {
+    position: static;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: #ce1126;
+    border: none;
+    color: #fff;
+    box-shadow: 0 2px 12px rgba(206, 17, 38, 0.4);
+    margin: 0;
+    pointer-events: auto;
+    transition: all 0.2s ease;
+  }
+  .home-btn:hover,
+  .home-btn:active {
+    background: #e8243a;
+    transform: scale(0.95) !important;
+    box-shadow: 0 2px 16px rgba(206, 17, 38, 0.5) !important;
+  }
+  .home-btn svg {
+    width: 22px;
+    height: 22px;
   }
 
 
