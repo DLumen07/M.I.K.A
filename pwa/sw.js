@@ -1,5 +1,5 @@
 // Aralin 1 PWA - Service Worker
-const CACHE_NAME = 'aralin1-v1';
+const CACHE_NAME = 'aralin1-v2';
 const ASSETS = [
   './',
   './index.html',
@@ -9,16 +9,12 @@ const ASSETS = [
   './manifest.json',
   './assets/icon.svg',
   './assets/images/aktibiti1-bg.png',
-  './assets/images/aktibiti2-bg.png',
-  './assets/images/aktibiti2_2-bg.png',
-  './assets/images/aktibiti3-s1-bg.png',
-  './assets/images/aktibiti3-s1-dq.png',
-  './assets/images/aktibiti3-s2-dq.png',
-  './assets/images/aktibiti3-s3-dq.png',
-  './assets/images/aktibiti5-s1-dq.jpg',
-  './assets/images/aktibiti5-s2-dq.jpg',
-  './assets/images/aktibiti5-s3-dq.jpg',
-  './assets/images/aktibiti5-s4-dq.jpg',
+  './assets/images/2.png',
+  './assets/images/3.png',
+  './assets/images/act5-3.png',
+  './assets/images/act5-4.png',
+  './assets/images/act5-5.png',
+  './assets/images/act5-6.png',
   './assets/audio/aktibiti1.m4a'
 ];
 

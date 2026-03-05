@@ -31,12 +31,31 @@
       navigator.serviceWorker.register('sw.js').catch(() => {});
     }
 
-    // Preload first activity image
-    const img = new Image();
-    img.onload = img.onerror = () => showDashboard();
-    img.src = ACTIVITIES[0].bg || ACTIVITIES[0].slides?.[0]?.bg || '';
+    // Preload ALL activity images for instant display
+    const allImages = [];
+    ACTIVITIES.forEach(act => {
+      if (act.bg) allImages.push(act.bg);
+      if (act.slides) {
+        act.slides.forEach(slide => {
+          if (slide.sentences) {
+            slide.sentences.forEach(s => { if (s.image) allImages.push(s.image); });
+          }
+        });
+      }
+    });
+    let loaded = 0;
+    const total = allImages.length;
+    function onImgDone() {
+      loaded++;
+      if (loaded >= total) showDashboard();
+    }
+    allImages.forEach(src => {
+      const img = new Image();
+      img.onload = img.onerror = onImgDone;
+      img.src = src;
+    });
     // Fallback timeout
-    setTimeout(showDashboard, 3000);
+    setTimeout(showDashboard, 5000);
 
     // Setup navigation
     setupNavigation();

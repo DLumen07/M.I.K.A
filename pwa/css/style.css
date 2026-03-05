@@ -452,7 +452,7 @@ body::before {
   gap: 10px;
 }
 .dd-sentence {
-  font-family: 'Comic Sans MS', 'Segoe Print', cursive;
+  font-family: 'Georgia', 'Times New Roman', serif;
   font-size: 18px;
   font-weight: 700;
   color: #3e2723;
@@ -501,7 +501,7 @@ body::before {
 @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
 
 .dd-drop-zone .placed-word {
-  font-family: 'Comic Sans MS', 'Segoe Print', cursive;
+  font-family: 'Georgia', 'Times New Roman', serif;
   font-size: 20px; font-weight: 700; color: #3e2723;
   background: transparent; padding: 6px 18px;
 }
@@ -515,7 +515,7 @@ body::before {
   box-sizing: border-box;
 }
 .dd-word {
-  font-family: 'Comic Sans MS', 'Segoe Print', cursive;
+  font-family: 'Georgia', 'Times New Roman', serif;
   font-size: 16px; font-weight: 700; color: #3e2723;
   background: linear-gradient(to bottom, #fff8e1, #ffecb3);
   padding: 10px 20px; border-radius: 7px;
@@ -555,7 +555,7 @@ body::before {
   opacity: 0.4; transform: scale(0.95);
 }
 .dd-word-ghost {
-  font-family: 'Comic Sans MS', 'Segoe Print', cursive;
+  font-family: 'Georgia', 'Times New Roman', serif;
   font-size: 16px; font-weight: 700; color: #3e2723;
   background: linear-gradient(to bottom, #fff8e1, #ffecb3);
   padding: 10px 20px; border-radius: 7px;
