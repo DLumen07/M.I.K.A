@@ -171,6 +171,16 @@
       });
     }
 
+    const startBtn3 = $('#btnStartAralin3');
+    if (startBtn3) {
+      startBtn3.addEventListener('click', () => {
+        switchAralin('aralin3');
+        dashboard.classList.add('hidden');
+        app.classList.remove('hidden');
+        navigateTo(0);
+      });
+    }
+
     const homeBtn = $('#btnHome');
     if (homeBtn) {
       homeBtn.addEventListener('click', () => {
@@ -281,7 +291,9 @@
       case 'hotspots':    renderHotspots(view, activity); break;
       case 'drag-drop':   renderDragDrop(view, activity); break;
       case 'quiz':        renderQuiz(view, activity); break;
+      case 'true-false':  renderTrueFalse(view, activity); break;
       case 'poem-audio':  renderPoemAudio(view, activity); break;
+      case 'word-match':  renderWordMatch(view, activity); break;
     }
 
     container.appendChild(view);
@@ -640,10 +652,90 @@
     scrollContainer.className = 'dd-scroll-container';
     view.appendChild(scrollContainer);
 
-    // Render all slides at once as scroll-snap sections
+    // Track current slide index for navigation
+    let ddCurrentSlide = 0;
+
+    // Slide navigation bar (only for multi-slide activities)
+    let slideNavDiv = null;
+    let slideCounter = null;
+    let prevBtn = null;
+    let nextBtn = null;
+
+    if (activity.slides.length > 1) {
+      slideNavDiv = document.createElement('div');
+      slideNavDiv.className = 'slide-nav';
+
+      prevBtn = document.createElement('button');
+      prevBtn.className = 'slide-nav-btn';
+      prevBtn.innerHTML = '&#9664;';
+      prevBtn.disabled = true;
+      prevBtn.addEventListener('click', () => {
+        if (ddCurrentSlide > 0) {
+          ddCurrentSlide--;
+          showDdSlide(ddCurrentSlide);
+        }
+      });
+
+      nextBtn = document.createElement('button');
+      nextBtn.className = 'slide-nav-btn';
+      nextBtn.innerHTML = '&#9654;';
+      nextBtn.addEventListener('click', () => {
+        if (ddCurrentSlide < activity.slides.length - 1) {
+          ddCurrentSlide++;
+          showDdSlide(ddCurrentSlide);
+        }
+      });
+
+      slideCounter = document.createElement('span');
+      slideCounter.className = 'slide-counter';
+
+      slideNavDiv.appendChild(prevBtn);
+      slideNavDiv.appendChild(slideCounter);
+      slideNavDiv.appendChild(nextBtn);
+      view.appendChild(slideNavDiv);
+    }
+
+    // Build all slides upfront
     activity.slides.forEach((_, slideIndex) => {
       buildSlideSection(scrollContainer, activity, slideIndex, sharedState, wordsDiv);
     });
+
+    // Function to show/hide slides and update word buttons per slide
+    function showDdSlide(index) {
+      ddCurrentSlide = index;
+      const sections = scrollContainer.querySelectorAll('.dd-scroll-section');
+      sections.forEach((s, i) => {
+        s.style.display = i === index ? '' : 'none';
+      });
+
+      // Update word buttons: show only words for the current slide  
+      const slideWords = activity.slides[index].words || activity.words || [];
+      wordsDiv.querySelectorAll('.dd-word').forEach(btn => {
+        const word = btn.dataset.word;
+        if (slideWords.includes(word)) {
+          btn.style.display = '';
+        } else {
+          btn.style.display = 'none';
+        }
+        // Reset selection state
+        btn.classList.remove('selected');
+      });
+      sharedState.selectedWord = null;
+
+      // Update nav buttons
+      if (slideNavDiv) {
+        prevBtn.disabled = index === 0;
+        nextBtn.disabled = index === activity.slides.length - 1;
+        slideCounter.textContent = (index + 1) + ' / ' + activity.slides.length;
+      }
+    }
+
+    // Initialize first slide
+    if (activity.slides.length > 1) {
+      // Store showDdSlide on the view so checkDragDrop can access it
+      view._showDdSlide = showDdSlide;
+      showDdSlide(0);
+    }
   }
 
   function buildSlideSection(scrollContainer, activity, slideIndex, sharedState, wordsDiv) {
@@ -838,8 +930,14 @@
           isLast ? 'Tapos na' : 'Susunod',
           () => {
             if (!isLast) {
-              const nextSection = viewport.querySelector('[data-slide-index="' + (slideIndex + 1) + '"]');
-              if (nextSection) nextSection.scrollIntoView({ behavior: 'smooth' });
+              // Use slide navigation if available, otherwise scroll
+              const viewEl = viewport.closest('.view-drag-drop');
+              if (viewEl && viewEl._showDdSlide) {
+                viewEl._showDdSlide(slideIndex + 1);
+              } else {
+                const nextSection = viewport.querySelector('[data-slide-index="' + (slideIndex + 1) + '"]');
+                if (nextSection) nextSection.scrollIntoView({ behavior: 'smooth' });
+              }
             }
           }
         );
@@ -852,6 +950,30 @@
     view.classList.add('view-quiz');
     quizState = { index: 0, score: 0, answered: false };
     renderQuizQuestion(view, activity, 0);
+
+    // Panuto popup (appended after renderQuizQuestion so innerHTML='' doesn't wipe it)
+    if (activity.instruction) {
+      let bodyText = activity.instruction;
+      if (bodyText.startsWith('Panuto:')) {
+        bodyText = '<strong>Panuto:</strong> ' + bodyText.substring(7);
+      }
+      const overlay = document.createElement('div');
+      overlay.className = 'dd-panuto-overlay';
+      overlay.innerHTML = `
+        <div class="dd-panuto-modal">
+          <div class="dd-panuto-ribbon">${activity.title}</div>
+          <div class="dd-panuto-body">${bodyText}</div>
+          <button class="dd-panuto-close">OK, Simulan!</button>
+        </div>
+      `;
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay || e.target.classList.contains('dd-panuto-close')) {
+          overlay.classList.add('dd-panuto-hide');
+          setTimeout(() => overlay.remove(), 300);
+        }
+      });
+      view.appendChild(overlay);
+    }
   }
 
   function renderQuizQuestion(view, activity, qIndex) {
@@ -950,6 +1072,430 @@
 
     card.appendChild(choicesDiv);
     view.appendChild(card);
+  }
+
+  // ===== RENDERER: TRUE-FALSE (Aralin 2 Aktibiti 5) =====
+  function renderTrueFalse(view, activity) {
+    view.classList.add('view-quiz');
+
+    const state = { index: 0, score: 0 };
+    renderTFSlide(view, activity, state);
+
+    // Panuto — shown as popup overlay when activity opens (appended after renderTFSlide so innerHTML='' doesn't wipe it)
+    if (activity.instruction) {
+      let bodyText = activity.instruction;
+      if (bodyText.startsWith('Panuto:')) {
+        bodyText = '<strong>Panuto:</strong> ' + bodyText.substring(7);
+      }
+      const overlay = document.createElement('div');
+      overlay.className = 'dd-panuto-overlay';
+      overlay.innerHTML = `
+        <div class="dd-panuto-modal">
+          <div class="dd-panuto-ribbon">${activity.title}</div>
+          <div class="dd-panuto-body">${bodyText}</div>
+          <button class="dd-panuto-close">OK, Simulan!</button>
+        </div>
+      `;
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay || e.target.classList.contains('dd-panuto-close')) {
+          overlay.classList.add('dd-panuto-hide');
+          setTimeout(() => overlay.remove(), 300);
+        }
+      });
+      view.appendChild(overlay);
+    }
+  }
+
+  function renderTFSlide(view, activity, state) {
+    view.innerHTML = '';
+    const qIndex = state.index;
+    const q = activity.questions[qIndex];
+    const total = activity.questions.length;
+
+    const card = document.createElement('div');
+    card.classList.add('quiz-card');
+
+    // Progress dots
+    const progress = document.createElement('div');
+    progress.classList.add('quiz-progress');
+    activity.questions.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.classList.add('quiz-progress-dot');
+      if (i < qIndex) dot.classList.add('done');
+      if (i === qIndex) dot.classList.add('active');
+      progress.appendChild(dot);
+    });
+    card.appendChild(progress);
+
+    // Counter
+    const counter = document.createElement('div');
+    counter.classList.add('quiz-counter');
+    counter.textContent = `Tanong ${qIndex + 1} sa ${total}`;
+    card.appendChild(counter);
+
+    // Question text
+    const questionDiv = document.createElement('div');
+    questionDiv.classList.add('quiz-question', 'tf-question');
+    questionDiv.innerHTML = '\u201C' + q.text + '\u201D';
+    card.appendChild(questionDiv);
+
+    // Tama / Mali buttons
+    const choicesDiv = document.createElement('div');
+    choicesDiv.classList.add('tf-choices');
+    let answered = false;
+
+    const tamaBtn = document.createElement('button');
+    tamaBtn.className = 'tf-btn tf-tama';
+    tamaBtn.innerHTML = '<span class="tf-radio"></span> Tama';
+
+    const maliBtn = document.createElement('button');
+    maliBtn.className = 'tf-btn tf-mali';
+    maliBtn.innerHTML = '<span class="tf-radio"></span> Mali';
+
+    function handleAnswer(picked) {
+      if (answered) return;
+      answered = true;
+      const isCorrect = picked === q.answer;
+      if (isCorrect) state.score++;
+
+      // Highlight correct and wrong
+      const correctBtn = q.answer ? tamaBtn : maliBtn;
+      const wrongBtn = q.answer ? maliBtn : tamaBtn;
+      const pickedBtn = picked ? tamaBtn : maliBtn;
+
+      correctBtn.classList.add('correct');
+      if (!isCorrect) pickedBtn.classList.add('wrong');
+      tamaBtn.disabled = true;
+      maliBtn.disabled = true;
+      checkBtn.disabled = true;
+
+      // Auto advance
+      setTimeout(() => {
+        if (qIndex < total - 1) {
+          state.index = qIndex + 1;
+          renderTFSlide(view, activity, state);
+        } else {
+          const score = state.score;
+          const percent = Math.round((score / total) * 100);
+          const icon = percent >= 80 ? '\uD83C\uDFC6' : percent >= 60 ? '\uD83D\uDC4D' : '\uD83D\uDCDA';
+          const msg = percent >= 80
+            ? 'Napakagaling! Naunawaan mo ang mga salita.'
+            : percent >= 60
+              ? 'Maganda! Kaunti na lang at magiging perpekto ka.'
+              : 'Subukan mo ulit upang mas matuto pa.';
+          showFeedback(icon, `${score} / ${total} (${percent}%)`, msg, 'Ulitin', () => {
+            state.index = 0; state.score = 0;
+            renderTrueFalse(view, activity);
+          });
+        }
+      }, isCorrect ? 1200 : 2000);
+    }
+
+    tamaBtn.addEventListener('click', () => { tamaBtn.classList.add('selected'); maliBtn.classList.remove('selected'); });
+    maliBtn.addEventListener('click', () => { maliBtn.classList.add('selected'); tamaBtn.classList.remove('selected'); });
+
+    choicesDiv.appendChild(tamaBtn);
+    choicesDiv.appendChild(maliBtn);
+    card.appendChild(choicesDiv);
+
+    // Check button
+    const checkBtn = document.createElement('button');
+    checkBtn.className = 'tf-check-btn';
+    checkBtn.innerHTML = '\u2714 Suriin';
+    checkBtn.addEventListener('click', () => {
+      if (tamaBtn.classList.contains('selected')) handleAnswer(true);
+      else if (maliBtn.classList.contains('selected')) handleAnswer(false);
+    });
+    card.appendChild(checkBtn);
+
+    view.appendChild(card);
+  }
+
+  // ===== RENDERER: WORD-MATCH (Aralin 2 Aktibiti 2) =====
+  function renderWordMatch(view, activity) {
+    const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const LINE_COLORS = ['#1976d2','#e65100','#6a1b9a','#2e7d32','#c62828','#00838f','#4e342e'];
+    const wrapper = document.createElement('div');
+    wrapper.className = 'wm-activity';
+
+    // Panuto popup
+    if (activity.instruction) {
+      let bodyText = activity.instruction;
+      if (bodyText.startsWith('Panuto:')) {
+        bodyText = '<strong>Panuto:</strong> ' + bodyText.substring(7);
+      }
+      const overlay = document.createElement('div');
+      overlay.className = 'dd-panuto-overlay';
+      overlay.innerHTML =
+        '<div class="dd-panuto-modal">' +
+          '<div class="dd-panuto-ribbon">' + escapeHtml(activity.title) + '</div>' +
+          '<div class="dd-panuto-body">' + bodyText + '</div>' +
+          '<button class="dd-panuto-close">OK, Simulan!</button>' +
+        '</div>';
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay || e.target.classList.contains('dd-panuto-close')) {
+          overlay.classList.add('dd-panuto-hide');
+          setTimeout(() => overlay.remove(), 300);
+        }
+      });
+      view.appendChild(overlay);
+    }
+
+    // Shuffle definitions
+    const shuffledDefs = activity.pairs.map((p, i) => ({ text: p.definition, idx: i }));
+    for (let i = shuffledDefs.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledDefs[i], shuffledDefs[j]] = [shuffledDefs[j], shuffledDefs[i]];
+    }
+
+    const totalPairs = activity.pairs.length;
+    const matches = {};       // wordIdx → shuffledDefPos
+    let selectedWord = null;
+    let checked = false;
+
+    // Board: relative container for SVG lines + columns
+    const board = document.createElement('div');
+    board.className = 'wm-board';
+
+    // SVG overlay for lines
+    const svgNS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(svgNS, 'svg');
+    svg.classList.add('wm-lines');
+    board.appendChild(svg);
+
+    // Columns
+    const columns = document.createElement('div');
+    columns.className = 'wm-columns';
+
+    // Words column (left, numbered 1-5)
+    const wordsCol = document.createElement('div');
+    wordsCol.className = 'wm-col wm-words-col';
+    const wordEls = [];
+    const wordDots = [];
+
+    activity.pairs.forEach((pair, i) => {
+      const row = document.createElement('div');
+      row.className = 'wm-word';
+      row.dataset.idx = i;
+      row.innerHTML =
+        '<span class="wm-word-num">' + (i + 1) + '</span>' +
+        '<span class="wm-word-text">' + escapeHtml(pair.word) + '</span>' +
+        '<span class="wm-dot wm-dot-r"></span>';
+      row.addEventListener('click', () => onWordClick(i));
+      wordsCol.appendChild(row);
+      wordEls.push(row);
+      wordDots.push(row.querySelector('.wm-dot'));
+    });
+
+    // Definitions column (right, lettered A-E)
+    const defsCol = document.createElement('div');
+    defsCol.className = 'wm-col wm-defs-col';
+    const defEls = [];
+    const defDots = [];
+
+    shuffledDefs.forEach((def, si) => {
+      const row = document.createElement('div');
+      row.className = 'wm-def';
+      row.dataset.sidx = si;
+      row.dataset.idx = def.idx;
+      row.innerHTML =
+        '<span class="wm-dot wm-dot-l"></span>' +
+        '<span class="wm-def-letter">' + LETTERS[si] + '</span>' +
+        '<span class="wm-def-text">' + escapeHtml(def.text) + '</span>';
+      row.addEventListener('click', () => onDefClick(si));
+      defsCol.appendChild(row);
+      defEls.push(row);
+      defDots.push(row.querySelector('.wm-dot'));
+    });
+
+    columns.appendChild(wordsCol);
+    columns.appendChild(defsCol);
+    board.appendChild(columns);
+    wrapper.appendChild(board);
+
+    // Actions container
+    const actions = document.createElement('div');
+    actions.className = 'wm-actions';
+
+    // Check button
+    const checkBtn = document.createElement('button');
+    checkBtn.className = 'wm-check-btn';
+    checkBtn.textContent = 'Suriin';
+    checkBtn.addEventListener('click', checkAnswers);
+    actions.appendChild(checkBtn);
+
+    // Clear button
+    const clearBtn = document.createElement('button');
+    clearBtn.className = 'wm-clear-btn';
+    clearBtn.textContent = 'Alisin';
+    clearBtn.addEventListener('click', clearAll);
+    actions.appendChild(clearBtn);
+
+    wrapper.appendChild(actions);
+
+    view.appendChild(wrapper);
+
+    // — Interaction logic —
+    function clearAll() {
+      if (checked) return; // Prevent clearing if already finished/checking
+      
+      // Clear data dictionary
+      for (const key in matches) {
+        delete matches[key];
+      }
+      // Reset variables
+      selectedWord = null;
+      
+      // Remove visual classes
+      wordEls.forEach(w => w.classList.remove('wm-selected', 'wm-linked', 'wm-correct', 'wm-incorrect'));
+      defEls.forEach(d => d.classList.remove('wm-linked', 'wm-correct', 'wm-incorrect'));
+
+      // Erase drawn lines
+      drawLines();
+    }
+    function onWordClick(wi) {
+      if (checked) return;
+      // If already selected, deselect
+      if (selectedWord === wi) {
+        wordEls[wi].classList.remove('wm-selected');
+        selectedWord = null;
+        return;
+      }
+      // Remove previous selection highlight
+      wordEls.forEach(w => w.classList.remove('wm-selected'));
+      wordEls[wi].classList.add('wm-selected');
+      selectedWord = wi;
+    }
+
+    function onDefClick(si) {
+      if (checked || selectedWord === null) return;
+      const wi = selectedWord;
+
+      // Remove old match from this word if any
+      if (matches[wi] !== undefined) {
+        defEls[matches[wi]].classList.remove('wm-linked');
+      }
+      // Remove any other word that was pointing to this def
+      Object.keys(matches).forEach(k => {
+        if (parseInt(k) !== wi && matches[k] === si) {
+          wordEls[k].classList.remove('wm-linked');
+          delete matches[k];
+        }
+      });
+
+      matches[wi] = si;
+      wordEls[wi].classList.remove('wm-selected');
+      wordEls[wi].classList.add('wm-linked');
+      defEls[si].classList.add('wm-linked');
+      selectedWord = null;
+      drawLines();
+    }
+
+    function drawLines() {
+      // Clear existing lines
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      const boardRect = board.getBoundingClientRect();
+      svg.setAttribute('width', boardRect.width);
+      svg.setAttribute('height', boardRect.height);
+
+      Object.keys(matches).forEach((wi, ci) => {
+        const si = matches[wi];
+        const wDot = wordDots[wi];
+        const dDot = defDots[si];
+        const wr = wDot.getBoundingClientRect();
+        const dr = dDot.getBoundingClientRect();
+
+        const x1 = wr.left + wr.width / 2 - boardRect.left;
+        const y1 = wr.top + wr.height / 2 - boardRect.top;
+        const x2 = dr.left + dr.width / 2 - boardRect.left;
+        const y2 = dr.top + dr.height / 2 - boardRect.top;
+
+        const line = document.createElementNS(svgNS, 'line');
+        line.setAttribute('x1', x1);
+        line.setAttribute('y1', y1);
+        line.setAttribute('x2', x2);
+        line.setAttribute('y2', y2);
+        line.setAttribute('stroke', LINE_COLORS[parseInt(wi) % LINE_COLORS.length]);
+        line.setAttribute('stroke-width', '3');
+        line.setAttribute('stroke-linecap', 'round');
+        line.dataset.wi = wi;
+        svg.appendChild(line);
+      });
+    }
+
+    // Redraw on resize
+    window.addEventListener('resize', () => { if (!checked) drawLines(); });
+
+    function checkAnswers() {
+      if (Object.keys(matches).length < totalPairs) {
+        showFeedback('\u26A0\uFE0F', 'Hindi pa kumpleto', 'Ikonekta muna ang lahat ng salita sa kahulugan bago suriin.', 'OK', null);
+        return;
+      }
+      checked = true;
+      checkBtn.disabled = true;
+      checkBtn.classList.add('wm-btn-disabled');
+
+      let correct = 0;
+      // Color each line and card green/red
+      Object.keys(matches).forEach(wi => {
+        const si = matches[wi];
+        const correctIdx = parseInt(wi);
+        const defOrigIdx = parseInt(defEls[si].dataset.idx);
+        const isCorrect = correctIdx === defOrigIdx;
+        if (isCorrect) correct++;
+
+        const cls = isCorrect ? 'wm-correct' : 'wm-incorrect';
+        wordEls[wi].classList.add(cls);
+        defEls[si].classList.add(cls);
+
+        // Color SVG line
+        const svgLine = svg.querySelector('line[data-wi="' + wi + '"]');
+        if (svgLine) {
+          svgLine.setAttribute('stroke', isCorrect ? '#2e7d32' : '#d32f2f');
+          svgLine.setAttribute('stroke-width', isCorrect ? '3' : '3');
+          if (!isCorrect) svgLine.setAttribute('stroke-dasharray', '6,4');
+        }
+      });
+
+      setTimeout(() => {
+        if (correct === totalPairs) {
+          showFeedback('\u2705', 'Magaling!', 'Naitapat mo nang tama ang lahat ng salita sa kahulugan nito!', 'Magpatuloy', null);
+        } else {
+          showFeedback(
+            correct > 0 ? '\uD83D\uDCA1' : '\u274C',
+            correct + ' / ' + totalPairs + ' ang tama',
+            'Suriin ang mga may pulang linya at subukan muli.',
+            'Subukan Muli',
+            () => retryMatch()
+          );
+        }
+      }, 600);
+    }
+
+    function retryMatch() {
+      checked = false;
+      checkBtn.disabled = false;
+      checkBtn.classList.remove('wm-btn-disabled');
+      Object.keys(matches).forEach(wi => {
+        wordEls[wi].classList.remove('wm-correct', 'wm-incorrect', 'wm-linked');
+        defEls[matches[wi]].classList.remove('wm-correct', 'wm-incorrect', 'wm-linked');
+      });
+      // Clear only incorrect matches
+      const toRemove = [];
+      Object.keys(matches).forEach(wi => {
+        const si = matches[wi];
+        const defOrigIdx = parseInt(defEls[si].dataset.idx);
+        if (parseInt(wi) !== defOrigIdx) {
+          toRemove.push(wi);
+        } else {
+          // Keep correct ones locked
+          wordEls[wi].classList.add('wm-correct', 'wm-linked');
+          defEls[si].classList.add('wm-correct', 'wm-linked');
+        }
+      });
+      toRemove.forEach(wi => delete matches[wi]);
+      drawLines();
+    }
   }
 
   // ===== RENDERER: POEM + AUDIO (Aralin 2 Aktibiti 1) =====
