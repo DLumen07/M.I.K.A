@@ -664,7 +664,12 @@
 
       wordsDiv.appendChild(btn);
     });
-    view.appendChild(wordsDiv);
+
+    // Wrap word bank in a glass-effect header
+    const wordBankHeader = document.createElement('div');
+    wordBankHeader.classList.add('dd-words-header');
+    wordBankHeader.appendChild(wordsDiv);
+    view.appendChild(wordBankHeader);
 
     // Scroll-snap container — all slides stacked vertically
     const scrollContainer = document.createElement('div');
