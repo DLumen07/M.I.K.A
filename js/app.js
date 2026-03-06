@@ -46,17 +46,36 @@
     });
     let loaded = 0;
     const total = allImages.length;
+    let dashboardShown = false;
+    const minLoadTime = 1500; // minimum 1.5s loading screen
+    const loadStart = Date.now();
+
+    function triggerDashboard() {
+      if (dashboardShown) return;
+      const elapsed = Date.now() - loadStart;
+      const remaining = Math.max(0, minLoadTime - elapsed);
+      setTimeout(() => {
+        if (dashboardShown) return;
+        dashboardShown = true;
+        showDashboard();
+      }, remaining);
+    }
+
     function onImgDone() {
       loaded++;
-      if (loaded >= total) showDashboard();
+      if (loaded >= total) triggerDashboard();
     }
-    allImages.forEach(src => {
-      const img = new Image();
-      img.onload = img.onerror = onImgDone;
-      img.src = src;
-    });
+    if (total === 0) {
+      triggerDashboard();
+    } else {
+      allImages.forEach(src => {
+        const img = new Image();
+        img.onload = img.onerror = onImgDone;
+        img.src = src;
+      });
+    }
     // Fallback timeout
-    setTimeout(showDashboard, 5000);
+    setTimeout(() => { if (!dashboardShown) { dashboardShown = true; showDashboard(); } }, 5000);
 
     // Setup navigation
     setupNavigation();
@@ -132,20 +151,20 @@
   }
 
   function showDashboard() {
+    // Dismiss loading screen with animation
     if (loadingScreen && !loadingScreen.classList.contains('fade-out')) {
       loadingScreen.classList.add('fade-out');
       setTimeout(() => {
         loadingScreen.style.display = 'none';
+        // Only show dashboard if user isn't already in an activity (e.g. restored state)
+        if (!app.classList.contains('hidden')) return;
         dashboard.classList.remove('hidden');
       }, 400);
-    } else {
-      app.classList.add('hidden');
-      dashboard.classList.remove('hidden');
+      return;
     }
-    // Ensure dashboard is properly visible if coming back from an activity
-    if (dashboard.classList.contains('hidden')) {
-        dashboard.classList.remove('hidden');
-    }
+    // Coming back from an activity (Home button)
+    app.classList.add('hidden');
+    dashboard.classList.remove('hidden');
     updateDashboardLocks();
     saveState(false, 0);
   }
