@@ -1,0 +1,13 @@
+{
+  "appId": "com.mika.aralin1",
+  "appName": "M.I.K.A",
+  "webDir": "pwa",
+  "bundledWebRuntime": false,
+  "android": {
+    "allowMixedContent": false,
+    "backgroundColor": "#5d4037"
+  },
+  "server": {
+    "androidScheme": "https"
+  }
+}
