@@ -1,5 +1,5 @@
-// Aralin 1 PWA - Service Worker
-const CACHE_NAME = 'aralin1-v75';3efa1c4 (UI Polish: Complete Dashboard and Loading Screen Redesign)
+﻿// Aralin 1 PWA - Service Worker
+const CACHE_NAME = 'aralin1-v76';
 const ASSETS = [
   './',
   './index.html',
@@ -46,4 +46,3 @@ self.addEventListener('fetch', event => {
       .then(cached => cached || fetch(event.request))
   );
 });
-
