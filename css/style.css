@@ -897,10 +897,10 @@ body::before {
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #FFFFFF; font-size: 16px; font-weight: 800; letter-spacing: 1px;
   cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  font-family: inherit; box-shadow: 0 6px 16px rgba(10, 132, 255, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+  font-family: inherit; box-shadow: none;
 }
-.dd-check-btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 24px rgba(10, 132, 255, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.3); }
-.dd-check-btn:active { transform: translateY(2px) scale(0.98); box-shadow: 0 2px 8px rgba(10, 132, 255, 0.4); }
+.dd-check-btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: none; }
+.dd-check-btn:active { transform: translateY(2px) scale(0.98); box-shadow: none; }
 .dd-check-btn:disabled { opacity: 0.6; cursor: not-allowed; filter: grayscale(1); transform: none; box-shadow: none; }
 
 .dd-reset-btn {
@@ -909,10 +909,10 @@ body::before {
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #FFFFFF; font-size: 16px; font-weight: 800; letter-spacing: 1px;
   cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  font-family: inherit; box-shadow: 0 6px 16px rgba(255, 69, 58, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+  font-family: inherit; box-shadow: none;
 }
-.dd-reset-btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 24px rgba(255, 69, 58, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.3); }
-.dd-reset-btn:active { transform: translateY(2px) scale(0.98); box-shadow: 0 2px 8px rgba(255, 69, 58, 0.4); }
+.dd-reset-btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: none; }
+.dd-reset-btn:active { transform: translateY(2px) scale(0.98); box-shadow: none; }
 
 /* ===== ACTIVITY: QUIZ (Aktibiti 4) ===== */
 .view-quiz {
@@ -1041,11 +1041,11 @@ body::before {
   background: linear-gradient(135deg, #1976d2, #1565c0);
   color: #fff; font-size: 16px; font-weight: 700;
   border: none; cursor: pointer;
-  box-shadow: 0 4px 12px rgba(25,118,210,0.4);
+  box-shadow: none;
   transition: all 0.2s ease;
   font-family: inherit;
 }
-.tf-check-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(25,118,210,0.5); }
+.tf-check-btn:hover { transform: translateY(-1px); box-shadow: none; }
 .tf-check-btn:disabled { opacity: 0.5; cursor: default; transform: none; }
 
 /* ===== FEEDBACK OVERLAY ===== */
@@ -1305,10 +1305,10 @@ body::before {
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #FFFFFF; font-size: 16px; font-weight: 800; letter-spacing: 1px;
   cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  font-family: inherit; box-shadow: 0 6px 16px rgba(10, 132, 255, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+  font-family: inherit; box-shadow: none;
 }
-.wm-check-btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 24px rgba(10, 132, 255, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.3); }
-.wm-check-btn:active { transform: translateY(2px) scale(0.98); box-shadow: 0 2px 8px rgba(10, 132, 255, 0.4); }
+.wm-check-btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: none; }
+.wm-check-btn:active { transform: translateY(2px) scale(0.98); box-shadow: none; }
 .wm-check-btn.wm-btn-disabled { opacity: 0.6; cursor: not-allowed; filter: grayscale(1); transform: none; box-shadow: none; }
 
 .wm-clear-btn {
@@ -1317,10 +1317,10 @@ body::before {
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #ffffff; font-size: 16px; font-weight: 800; letter-spacing: 1px;
   cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  font-family: inherit; box-shadow: 0 6px 16px rgba(255, 69, 58, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+  font-family: inherit; box-shadow: none;
 }
-.wm-clear-btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 24px rgba(255, 69, 58, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.3); }
-.wm-clear-btn:active { transform: translateY(2px) scale(0.98); box-shadow: 0 2px 8px rgba(255, 69, 58, 0.4); }
+.wm-clear-btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: none; }
+.wm-clear-btn:active { transform: translateY(2px) scale(0.98); box-shadow: none; }
 
 @media (max-width: 600px) {
   .wm-columns { gap: 16px; }
