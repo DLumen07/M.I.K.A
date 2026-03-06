@@ -36,7 +36,6 @@ const ARALIN_1 = [
     title: 'Aktibiti 2.2',
     subtitle: 'Tuklasin',
     type: 'hotspots',
-    instruction: 'Panuto: Pindutin ang larawan upang malaman ang angkop na salita, kahulugan, at pangungusap.',
     hotspots: [
       {
         img: 'assets/images/act2.2.-1.png',
@@ -79,6 +78,7 @@ const ARALIN_1 = [
     title: 'Aktibiti 4',
     subtitle: 'Subukin',
     type: 'quiz',
+    instruction: 'Panuto: Basahin ang bawat tanong at piliin ang tamang sagot mula sa mga pagpipilian.',
     questions: [
       {
         text: 'Ito ay nangangahulugang walang laman; walang saysay o kabuluhan.',
@@ -240,6 +240,7 @@ const ARALIN_2 = [
     title: 'Aktibiti 4',
     subtitle: 'Subukin',
     type: 'quiz',
+    instruction: 'Panuto: Basahin ang bawat tanong at piliin ang tamang sagot mula sa mga pagpipilian.',
     questions: [
       {
         text: 'Ang paglalakbay ni Andres sa malayong lugar upang hanapin ang kanyang kapalaran ay isang halimbawa ng __________.',

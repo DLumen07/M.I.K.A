@@ -143,7 +143,7 @@
       const btn = card2.querySelector('#btnStartAralin2');
       if (btn) {
         btn.disabled = false;
-        btn.textContent = 'Magsimula';
+        btn.textContent = 'Simulan →';
       }
       const desc = card2.querySelector('.dash-card-desc');
       if (desc) desc.textContent = 'Mga Salita sa Konteksto';
@@ -438,15 +438,18 @@
     if (activity.instruction) {
       let bodyText = activity.instruction;
       if (bodyText.startsWith('Panuto:')) {
-        bodyText = '<strong>Panuto:</strong> ' + bodyText.substring(7);
+        bodyText = bodyText.substring(7).trim();
       }
       const overlay = document.createElement('div');
       overlay.className = 'dd-panuto-overlay';
       overlay.innerHTML = `
         <div class="dd-panuto-modal">
-          <div class="dd-panuto-ribbon">${activity.title}</div>
+          <div class="dd-panuto-icon">📖</div>
+          <div class="dd-panuto-title">${activity.title}</div>
+          <div class="dd-panuto-divider"></div>
+          <div class="dd-panuto-label">Panuto</div>
           <div class="dd-panuto-body">${bodyText}</div>
-          <button class="dd-panuto-close">OK, Simulan!</button>
+          <button class="dd-panuto-close">Simulan →</button>
         </div>
       `;
       overlay.addEventListener('click', (e) => {
@@ -532,9 +535,12 @@
       overlay.className = 'dd-panuto-overlay';
       overlay.innerHTML = `
         <div class="dd-panuto-modal">
-          <div class="dd-panuto-ribbon">${activity.title}</div>
-          <div class="dd-panuto-body"><strong>Panuto:</strong> ${activity.instruction}</div>
-          <button class="dd-panuto-close">OK, Simulan!</button>
+          <div class="dd-panuto-icon">📖</div>
+          <div class="dd-panuto-title">${activity.title}</div>
+          <div class="dd-panuto-divider"></div>
+          <div class="dd-panuto-label">Panuto</div>
+          <div class="dd-panuto-body">${activity.instruction}</div>
+          <button class="dd-panuto-close">Simulan →</button>
         </div>
       `;
       overlay.addEventListener('click', (e) => {
@@ -979,15 +985,18 @@
     if (activity.instruction) {
       let bodyText = activity.instruction;
       if (bodyText.startsWith('Panuto:')) {
-        bodyText = '<strong>Panuto:</strong> ' + bodyText.substring(7);
+        bodyText = bodyText.substring(7).trim();
       }
       const overlay = document.createElement('div');
       overlay.className = 'dd-panuto-overlay';
       overlay.innerHTML = `
         <div class="dd-panuto-modal">
-          <div class="dd-panuto-ribbon">${activity.title}</div>
+          <div class="dd-panuto-icon">📖</div>
+          <div class="dd-panuto-title">${activity.title}</div>
+          <div class="dd-panuto-divider"></div>
+          <div class="dd-panuto-label">Panuto</div>
           <div class="dd-panuto-body">${bodyText}</div>
-          <button class="dd-panuto-close">OK, Simulan!</button>
+          <button class="dd-panuto-close">Simulan →</button>
         </div>
       `;
       overlay.addEventListener('click', (e) => {
@@ -1109,15 +1118,18 @@
     if (activity.instruction) {
       let bodyText = activity.instruction;
       if (bodyText.startsWith('Panuto:')) {
-        bodyText = '<strong>Panuto:</strong> ' + bodyText.substring(7);
+        bodyText = bodyText.substring(7).trim();
       }
       const overlay = document.createElement('div');
       overlay.className = 'dd-panuto-overlay';
       overlay.innerHTML = `
         <div class="dd-panuto-modal">
-          <div class="dd-panuto-ribbon">${activity.title}</div>
+          <div class="dd-panuto-icon">📖</div>
+          <div class="dd-panuto-title">${activity.title}</div>
+          <div class="dd-panuto-divider"></div>
+          <div class="dd-panuto-label">Panuto</div>
           <div class="dd-panuto-body">${bodyText}</div>
-          <button class="dd-panuto-close">OK, Simulan!</button>
+          <button class="dd-panuto-close">Simulan →</button>
         </div>
       `;
       overlay.addEventListener('click', (e) => {
@@ -1246,15 +1258,18 @@
     if (activity.instruction) {
       let bodyText = activity.instruction;
       if (bodyText.startsWith('Panuto:')) {
-        bodyText = '<strong>Panuto:</strong> ' + bodyText.substring(7);
+        bodyText = bodyText.substring(7).trim();
       }
       const overlay = document.createElement('div');
       overlay.className = 'dd-panuto-overlay';
       overlay.innerHTML =
         '<div class="dd-panuto-modal">' +
-          '<div class="dd-panuto-ribbon">' + escapeHtml(activity.title) + '</div>' +
+          '<div class="dd-panuto-icon">📖</div>' +
+          '<div class="dd-panuto-title">' + escapeHtml(activity.title) + '</div>' +
+          '<div class="dd-panuto-divider"></div>' +
+          '<div class="dd-panuto-label">Panuto</div>' +
           '<div class="dd-panuto-body">' + bodyText + '</div>' +
-          '<button class="dd-panuto-close">OK, Simulan!</button>' +
+          '<button class="dd-panuto-close">Simulan →</button>' +
         '</div>';
       overlay.addEventListener('click', (e) => {
         if (e.target === overlay || e.target.classList.contains('dd-panuto-close')) {
@@ -1531,15 +1546,18 @@
     if (activity.instruction) {
       let bodyText = activity.instruction;
       if (bodyText.startsWith('Panuto:')) {
-        bodyText = '<strong>Panuto:</strong> ' + bodyText.substring(7);
+        bodyText = bodyText.substring(7).trim();
       }
       const overlay = document.createElement('div');
       overlay.className = 'dd-panuto-overlay';
       overlay.innerHTML =
         '<div class="dd-panuto-modal">' +
-          '<div class="dd-panuto-ribbon">' + escapeHtml(activity.title) + '</div>' +
+          '<div class="dd-panuto-icon">📖</div>' +
+          '<div class="dd-panuto-title">' + escapeHtml(activity.title) + '</div>' +
+          '<div class="dd-panuto-divider"></div>' +
+          '<div class="dd-panuto-label">Panuto</div>' +
           '<div class="dd-panuto-body">' + bodyText + '</div>' +
-          '<button class="dd-panuto-close">OK, Simulan!</button>' +
+          '<button class="dd-panuto-close">Simulan →</button>' +
         '</div>';
       overlay.addEventListener('click', (e) => {
         if (e.target === overlay || e.target.classList.contains('dd-panuto-close')) {
@@ -1617,16 +1635,6 @@
 
     let scrollRAF = null;
     let currentScroll = 0;
-    const autoScroll = () => {
-      if (!audioEl || audioEl.paused) return;
-      if (audioEl.duration && card.scrollHeight > card.clientHeight) {
-        const maxScroll = card.scrollHeight - card.clientHeight;
-        const targetScroll = maxScroll * (audioEl.currentTime / audioEl.duration);
-        currentScroll += (targetScroll - currentScroll) * 0.05;
-        card.scrollTop = currentScroll;
-      }
-      scrollRAF = requestAnimationFrame(autoScroll);
-    };
 
     const updateProgress = () => {
       if (!audioEl) return;
@@ -1645,27 +1653,20 @@
 
     playBtn.addEventListener('click', () => {
       if (audioEl && !audioEl.paused) {
-        if (scrollRAF) cancelAnimationFrame(scrollRAF);
         audioEl.pause();
         playBtn.innerHTML = playSVG;
         playBtn.classList.remove('playing');
       } else if (audioEl && audioEl.paused && audioEl.currentTime > 0) {
-        audioEl.play().then(() => {
-          scrollRAF = requestAnimationFrame(autoScroll);
-        }).catch(() => {});
+        audioEl.play().catch(() => {});
         playBtn.innerHTML = pauseSVG;
         playBtn.classList.add('playing');
       } else {
-        currentScroll = card.scrollTop;
         audioEl = new Audio(activity.audio);
         audioEl.addEventListener('timeupdate', updateProgress);
-        audioEl.play().then(() => {
-          scrollRAF = requestAnimationFrame(autoScroll);
-        }).catch(() => {});
+        audioEl.play().catch(() => {});
         playBtn.innerHTML = pauseSVG;
         playBtn.classList.add('playing');
         audioEl.onended = () => {
-          if (scrollRAF) cancelAnimationFrame(scrollRAF);
           playBtn.innerHTML = playSVG;
           playBtn.classList.remove('playing');
           progressFill.style.width = '100%';

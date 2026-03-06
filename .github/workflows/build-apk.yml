@@ -38,7 +38,9 @@ jobs:
         run: ./gradlew assembleDebug
 
       - name: Rename APK
-        run: mv android/app/build/outputs/apk/debug/M.I.K.A-debug.apk android/app/build/outputs/apk/debug/M.I.K.A.apk
+        run: |
+          APK=$(find android/app/build/outputs/apk/debug -name "*.apk" | head -1)
+          mv "$APK" android/app/build/outputs/apk/debug/M.I.K.A.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
