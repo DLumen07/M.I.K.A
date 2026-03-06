@@ -1592,7 +1592,6 @@ body::before {
   }
   .bg-node {
     position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4;
-    animation: floatOrb 15s ease-in-out infinite alternate;
   }
   .node-1 { width: 200px; height: 200px; background: #ff3b30; top: -80px; left: -80px; animation-delay: 0s; }
   .node-2 { width: 180px; height: 180px; background: #0A84FF; bottom: -40px; right: -40px; animation-delay: -5s; }
@@ -1651,13 +1650,8 @@ body::before {
     padding: 28px 24px;
     margin-bottom: 32px;
     display: flex; align-items: center; justify-content: space-between; gap: 16px;
-    box-shadow: 0 16px 32px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.2);
+    box-shadow: 0 16px 32px rgba(0,0,0,0.4);
     position: relative; overflow: hidden;
-    animation: subtleBreathe 4s ease-in-out infinite alternate;
-  }
-  @keyframes subtleBreathe {
-    from { box-shadow: 0 16px 32px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.2); }
-    to { box-shadow: 0 16px 40px rgba(255,179,64,0.15), inset 0 1px 1px rgba(255,255,255,0.3); }
   }
   .dash-hero::before {
     content: ''; position: absolute; inset: 0; opacity: 0.2;
@@ -1801,7 +1795,7 @@ body::before {
     border-radius: 20px; padding: 20px 22px; margin-bottom: 24px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.2), inset 0 1px 1px rgba(255,255,255,0.05);
   }
-  .dash-tip-icon { font-size: 26px; flex-shrink: 0; filter: drop-shadow(0 2px 6px rgba(255,179,64,0.4)); animation: gentleFloat 3s ease-in-out infinite alternate; }
+  .dash-tip-icon { font-size: 26px; flex-shrink: 0; }
   @keyframes gentleFloat { from { transform: translateY(0); } to { transform: translateY(-3px); } }
   .dash-tip-text {
     font-size: 14px; font-weight: 600; color: #FFFFFF;
