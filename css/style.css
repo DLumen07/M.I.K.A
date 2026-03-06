@@ -1338,10 +1338,9 @@ body::before {
     flex-wrap: wrap;
     border-radius: 12px;
     margin: 15px 16px 10px 16px;
-    width: auto;
+    width: calc(100% - 32px);
+    box-sizing: border-box;
     border: 3px solid #8d6e63;
-    position: sticky;
-    top: 15px;
     z-index: 150;
   }
   .dd-word { font-size: 12px; padding: 4px 10px; }
