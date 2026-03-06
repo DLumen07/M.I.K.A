@@ -600,19 +600,19 @@ body::before {
   box-shadow: 0 4px 20px rgba(0,0,0,0.3);
   display: flex;
   justify-content: center;
-  padding: 10px 0;
+  padding: 4px 0;
 }
 
 /* Word choices area */
 .dd-words {
   display: flex; flex-wrap: wrap; gap: 8px;
-  justify-content: center; padding: 10px 4%;
+  justify-content: center; padding: 4px 4%;
   width: 100%;
   max-width: 920px;
   box-sizing: border-box;
   flex-shrink: 0;
   align-items: center;
-  min-height: 50px;
+  min-height: 40px;
 }
 .dd-word {
   font-family: 'Georgia', 'Times New Roman', serif;
@@ -1334,10 +1334,10 @@ body::before {
 
   .dd-words {
     gap: 8px;
-    padding: 12px 10px;
+    padding: 8px 8px;
     flex-wrap: wrap;
     border-radius: 12px;
-    margin: 15px 16px 10px 16px;
+    margin: 8px 16px;
     width: calc(100% - 32px);
     box-sizing: border-box;
     border: 3px solid #8d6e63;
