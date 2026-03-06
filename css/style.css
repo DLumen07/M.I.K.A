@@ -1774,7 +1774,7 @@ body::before {
     cursor: pointer;
     white-space: nowrap;
     font-family: 'Nunito', sans-serif;
-    box-shadow: 0 4px 16px rgba(10, 132, 255, 0.35);
+    box-shadow: none;
     width: 100%;
     margin-top: 4px;
   }
