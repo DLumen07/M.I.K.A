@@ -1449,189 +1449,89 @@ body::before {
 }
 
 /* ===== DASHBOARD ===== */
-  .dashboard {
-    position: fixed; inset: 0; z-index: 50;
-    display: flex; align-items: center; justify-content: center;
-    background-color: #53141b; /* Cordillera Deep Red */
-    background-image: 
-      /* Geometric Diamond / Ikat weaves */
-      linear-gradient(45deg, rgba(0,0,0,0.06) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.06) 75%, rgba(0,0,0,0.06)),
-      linear-gradient(135deg, rgba(0,0,0,0.06) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.06) 75%, rgba(0,0,0,0.06)),
-      /* Strong Horizontal Tapis Bands (Black, Yellow, Deep Red) */
-      repeating-linear-gradient(
-        180deg,
-        transparent 0,
-        transparent 50px,
-        rgba(15, 15, 15, 0.5) 50px,
-        rgba(15, 15, 15, 0.5) 65px,
-        rgba(252, 209, 22, 0.25) 65px,
-        rgba(252, 209, 22, 0.25) 70px,
-        rgba(15, 15, 15, 0.5) 70px,
-        rgba(15, 15, 15, 0.5) 85px
-      );
-    background-size: 60px 60px, 60px 60px, 100% 120px;
-    background-position: 0 0, 30px 30px, 0 0;
-    overflow-y: auto;
-    scrollbar-width: none;
-    font-family: 'Nunito', 'Segoe UI', system-ui, sans-serif;
-    overflow-x: hidden;
-  }
-  .dashboard::-webkit-scrollbar { display: none; }
-  
-  /* Additional vertical thread texture and vignette effect to simulate woven fabric */
-  .dashboard::after {
-    content: ''; position: fixed; inset: 0;
-    box-shadow: inset 0 0 160px rgba(0,0,0,0.8);
-    background-image: repeating-linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.02) 0,
-      rgba(255, 255, 255, 0.02) 1px,
-      transparent 1px,
-      transparent 4px
-    );
-    z-index: -1;
-    pointer-events: none;
-  }
+.dashboard {
+  position: fixed; inset: 0; z-index: 50;
+  display: flex; justify-content: center;
+  background-color: #f4f1ea;
+  background-image: radial-gradient(#e0dcd0 1px, transparent 1px);
+  background-size: 30px 30px;
+  overflow-y: auto; overflow-x: hidden;
+}
+.dashboard::-webkit-scrollbar { display: none; }
 
-  .dash-content {
-    max-width: 1200px; width: 100%;
-    padding: 60px 20px;
-    text-align: center;
-    z-index: 1;
-    margin: auto;
-  }
+.dash-content {
+  max-width: 1000px; width: 100%; margin: 0 auto;
+  padding: 60px 20px 100px;
+  z-index: 1; display: flex; flex-direction: column; align-items: center;
+}
 
-  .dash-header .app-logo {
-    font-size: 76px;
-    color: #ffffff; /* White so it pops */
-    margin-bottom: 12px; font-weight: 900;
-    text-transform: uppercase; letter-spacing: 4px;
-    text-shadow: 4px 4px 0 #1b0609, 2px 2px 20px rgba(0,0,0,0.5); /* Dark shadow stands out on red background */
-    -webkit-text-stroke: 2px #fcd116; /* PH Sun Yellow stroke */
-  }
+.dash-header {
+  width: 100%; text-align: center; margin-bottom: 50px;
+  background: linear-gradient(135deg, #53141b, #8a2432);
+  border-radius: 30px; padding: 50px 30px;
+  color: #fff; box-shadow: 0 20px 40px rgba(83,20,27,0.2);
+  position: relative; overflow: hidden;
+}
+.dash-header-inner { position: relative; z-index: 2; }
+.dash-header .app-logo {
+  font-size: 56px; font-weight: 900; letter-spacing: 6px; margin: 0 0 12px;
+  color: #fcd116; text-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+.dash-header .app-meaning {
+  font-size: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;
+  display: inline-block; background: rgba(0,0,0,0.3);
+  padding: 8px 24px; border-radius: 50px; margin-bottom: 24px;
+}
+.dash-header p {
+  font-size: 18px; font-weight: 400; color: #fdf6e3; margin: 0;
+}
 
-  .dash-header .app-meaning {
-    color: #0b1f44; /* Deep blue text over yellow */
-    font-size: 18px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    margin-bottom: 24px;
-    display: inline-block;
-    background: #fcd116; /* Solid PH yellow */
-    padding: 10px 28px;
-    border-radius: 50px;
-    border: 2px dashed #ce1126; /* PH Red dashed limit */
-  }
+.dash-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px; width: 100%;
+}
 
-  .dash-header p {
-    color: #cbd5e1; font-size: 18px; margin-bottom: 40px; font-weight: 600;
-  }
+.dash-card {
+  background: #fff; border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden; cursor: pointer; border: 1px solid #e2e8f0;
+  display: flex; flex-direction: column;
+}
+.dash-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); border-color: #cbd5e1; }
+.dash-card.active { border: 2px solid #53141b; }
+.dash-card.locked { opacity: 0.7; filter: grayscale(100%); pointer-events: none; }
 
-  .dash-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0 16px;
-    box-sizing: border-box;
-  }
+.dash-card-header {
+  height: 140px; display: flex; align-items: flex-start; justify-content: flex-end; padding: 20px;
+}
+.aralin-1-bg { background: linear-gradient(135deg, #FF6B6B, #C44D58); }
+.aralin-2-bg { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+.aralin-3-bg { background: linear-gradient(135deg, #f6d365, #fda085); }
+.dash-card-badge {
+  background: #fff; color: #1e293b; font-size: 12px; font-weight: 800;
+  text-transform: uppercase; padding: 6px 16px; border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15); letter-spacing: 1px;
+}
 
-  .dash-card {
-    background: #fdf6e3; /* Warm parchment/bamboo tone to contrast the red */
-    border: 2px solid #deb887;
-    border-bottom: 6px solid #b58b59;
-    border-radius: 20px;
-    padding: 32px 24px;
-    display: flex; flex-direction: column; align-items: center;
-    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative; overflow: hidden;
-    margin: 0 auto; /* Force strict centering in mobile grids */
-    width: 100%;
-    max-width: 320px; /* Constrains card so it doesn't stretch wildly */
-  }
+.dash-card-body { padding: 30px 24px; display: flex; flex-direction: column; flex: 1; text-align: left; }
+.dash-card-body h3 { font-size: 24px; color: #0f172a; font-weight: 800; margin: 0 0 8px; }
+.dash-card-desc { font-size: 15px; color: #64748b; margin: 0 0 24px; flex: 1; line-height: 1.5; font-weight: 500;}
 
-  .dash-card:hover {
-    transform: translateY(-6px);
-    border-color: #fcd116; /* Yellow border highlight */
-    border-bottom-color: #d1a80c;
-  }
+.dash-btn {
+  background: #fdf6e3; color: #53141b;
+  border: 2px solid #53141b; padding: 12px 20px;
+  font-size: 16px; font-weight: 700; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; transition: all 0.2s;
+}
+.dash-card:hover .dash-btn { background: #53141b; color: #fff; }
 
-  .dash-card.active {
-    border-color: #fcd116; /* Warm gold glow */
-    border-bottom-color: #d1a80c;
-    background: #fffbef; /* Slightly brighter cream */
-  }
-
-  .dash-card.locked {
-    background: #e8e2d5;
-    border-color: #c9c3b8;
-    border-bottom-color: #a49f95;
-    opacity: 0.85;
-    filter: grayscale(0.8);
-    pointer-events: none;
-    border-bottom-width: 2px;
-    margin-top: 4px;
-  }
-
-  /* Educational Card Inner Elements */
-  .dash-card-icon {
-    width: 76px;
-    height: 76px;
-    background: #ce1126; /* Tapis Red base */
-    color: #fcd116; /* Sun Yellow text */
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 38px;
-    font-weight: 900;
-    margin-bottom: 20px;
-    border: 4px solid #53141b; /* Dark red rings */
-    box-shadow: 0 4px 0 rgba(0,0,0,0.3); /* Softer drop shadow */
-    font-family: 'Arial Black', Impact, sans-serif;
-  }
-
-  .dash-card-body h3 {
-    font-size: 26px;
-    color: #53141b; /* Cordillera Red */
-    margin: 0 0 10px 0;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .dash-card-body p {
-    font-size: 16px;
-    color: #5c4d40; /* Dark woody brown */
-    margin: 0 0 30px 0;
-    line-height: 1.4;
-    font-weight: 700;
-  }
-
-  /* Educational App Style Buttons */
-  .dash-btn {
-    background: #0038a8; 
-    border: none;
-    border-bottom: 4px solid #002266;
-    color: #fff; font-weight: 800;
-    padding: 14px 30px; border-radius: 12px;
-    cursor: pointer; transition: all 0.1s;
-    font-family: inherit; font-size: 16px;
-    width: 100%;
-    text-transform: uppercase; letter-spacing: 1px;
-  }
-  .dash-btn:hover { 
-    background: #0044cc;
-  }
-  .dash-btn:active { 
-    transform: translateY(4px);
-    border-bottom-width: 0;
-    margin-bottom: 4px;
-  }
-  .dash-btn:disabled { 
-    background: #d1d5db; border-bottom: 4px solid #9ca3af; color: #6b7280; 
-  }
+@media (max-width: 600px) {
+  .dash-content { padding: 40px 16px 80px; }
+  .dash-header { padding: 40px 20px; border-radius: 24px; margin-bottom: 40px; }
+  .dash-header .app-logo { font-size: 42px; text-shadow: 2px 2px 0 #1b0609, 1px 1px 10px rgba(0,0,0,0.5); -webkit-text-stroke: 1px #fcd116;}
+}
 
 /* ===== HOME BUTTON ===== */
 .home-btn {
