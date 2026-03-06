@@ -1,5 +1,5 @@
-﻿// Aralin 1 PWA - Service Worker
-const CACHE_NAME = 'aralin1-v80';
+// Aralin 1 PWA - Service Worker
+const CACHE_NAME = 'aralin1-v81';
 const ASSETS = [
   './',
   './index.html',
@@ -46,3 +46,4 @@ self.addEventListener('fetch', event => {
       .then(cached => cached || fetch(event.request))
   );
 });
+

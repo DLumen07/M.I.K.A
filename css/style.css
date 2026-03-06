@@ -1186,7 +1186,7 @@ body::before {
   .wm-col { gap: 18px; }
   .wm-activity {
     padding: 12px;
-    padding-bottom: 40px; /* Base padding */
+    padding-bottom: 140px; /* Extra padding to clear mobile navbar */
     gap: 16px;
   }
   .wm-word { font-size: 0.78rem; padding: 14px 6px; gap: 6px; min-height: 60px; }
