@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARALIN 3 - AKTIBITI 5 Branching Scenario</title>
+<style>
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:linear-gradient(135deg,#ff9966,#ff5e62);
+color:white;
+text-align:center;
+}
+.screen{
+position:fixed;
+width:100%;
+height:100%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#ff9966,#ff5e62);
+}
+button{
+padding:10px 20px;
+border:none;
+border-radius:10px;
+background:#f6c23e;
+cursor:pointer;
+margin-top:15px;
+font-size:16px;
+}
+button:hover{transform:scale(1.05);}
+.game{
+display:none;
+padding:20px;
+max-width:900px;
+margin:auto;
+}
+.scenario{
+background:rgba(255,255,255,0.1);
+padding:15px;
+border-radius:15px;
+margin:15px 0;
+text-align:left;
+}
+.dropzone{
+border-bottom:3px solid white;
+display:inline-block;
+min-width:150px;
+padding:5px 10px;
+margin-left:10px;
+cursor:pointer;
+}
+.wordbank{
+margin-top:20px;
+}
+.word{
+background:white;
+color:#333;
+padding:8px 12px;
+margin:5px;
+display:inline-block;
+border-radius:8px;
+cursor:pointer;
+}
+.word:hover{background:#f6c23e;}
+.correct{color:#1cc88a;font-weight:bold;}
+.incorrect{color:#e74a3b;font-weight:bold;}
+.result{
+display:none;
+}
+</style>
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div class="screen" id="startScreen">
+<h1>ARALIN 3</h1>
+<h2>AKTIBITI 5: BRANCHING SCENARIO</h2>
+<p>I-drag ang tamang idyoma sa nakalaang patlang sa bawat sitwasyon.</p>
+<button onclick="startGame()">START</button>
+</div>
+
+<!-- GAME AREA -->
+<div class="game" id="gameArea">
+<h3>Score: <span id="score">0</span>/5</h3>
+
+<div class="scenario">
+<p>1. Paulit-ulit na pinagsabihan si Leo ng kanyang guro tungkol sa kanyang pagliban sa klase, ngunit hindi pa rin siya nagbago at hindi nakinig sa mga payo. Pumapasok lamang kung gusto.  
+Anong idyoma ang pinakaangkop? <span class="dropzone" data-index="0"></span></p>
+</div>
+
+<div class="scenario">
+<p>2. Matapos ang matagal na hindi pagkakaunawaan, nag-usap sina Ana at kaibigan. Inamin niya ang pagkakamali at ibinahagi ang tunay niyang nararamdaman.  
+Anong idyoma ang pinakaangkop? <span class="dropzone" data-index="1"></span></p>
+</div>
+
+<div class="scenario">
+<p>3. Hindi natanggap si Carlo sa paligsahan kahit pinaghandaan niya ito nang matagal. Tahimik siyang umupo sa sulok at tila nawalan ng gana.  
+Anong idyoma ang pinakaangkop? <span class="dropzone" data-index="2"></span></p>
+</div>
+
+<div class="scenario">
+<p>4. Araw-araw na inaalagaan ni Rosa ang kanyang lola. Lagi niyang inuuna ang kapakanan nito dahil napakalapit nito sa kanyang puso.  
+Anong idyoma ang pinakaangkop? <span class="dropzone" data-index="3"></span></p>
+</div>
+
+<div class="scenario">
+<p>5. Nagkunwari si Ben na tutulungan ang kanyang kaklase, ngunit palihim niyang kinuha ang proyekto nito at inangkin bilang kanya.  
+Anong idyoma ang pinakaangkop? <span class="dropzone" data-index="4"></span></p>
+</div>
+
+<div class="wordbank">
+<div class="word">balat-kalabaw</div>
+<div class="word">buksan ang dibdib</div>
+<div class="word">laylay ang balikat</div>
+</div>
+
+<button onclick="checkAnswers()">IPASA</button>
+</div>
+
+<!-- RESULT SCREEN -->
+<div class="screen result" id="resultScreen">
+<h1>TAPOS NA!</h1>
+<h2>Final Score: <span id="finalScore"></span>/5</h2>
+<div id="answerSummary"></div>
+<button onclick="closeGame()">CLOSE</button>
+</div>
+
+<script>
+const correctAnswers=["balat-kalabaw","buksan ang dibdib","laylay ang balikat","mahal na tao","maitim ang budhi"];
+let selectedWord=null;
+let score=0;
+
+function startGame(){
+document.getElementById("startScreen").style.display="none";
+document.getElementById("gameArea").style.display="block";
+}
+
+// Drag & drop simulation using click
+document.querySelectorAll(".word").forEach(word=>{
+word.addEventListener("click",function(){selectedWord=this.innerText;});
+});
+
+document.querySelectorAll(".dropzone").forEach(zone=>{
+zone.addEventListener("click",function(){
+if(selectedWord){this.innerText=selectedWord; selectedWord=null;}
+});
+});
+
+function checkAnswers(){
+score=0;
+document.querySelectorAll(".dropzone").forEach((zone,i)=>{
+if(zone.innerText===correctAnswers[i]){score++; zone.classList.add("correct");}
+else{zone.classList.add("incorrect"); zone.innerText+=` (Tama: ${correctAnswers[i]})`;}
+});
+document.getElementById("score").innerText=score;
+setTimeout(showResult,1500);
+}
+
+function showResult(){
+document.getElementById("gameArea").style.display="none";
+document.getElementById("resultScreen").style.display="flex";
+document.getElementById("finalScore").innerText=score;
+
+let summaryHtml="";
+correctAnswers.forEach((ans,i)=>{
+summaryHtml+=`<p>${i+1}. Tamang sagot: <b>${ans}</b></p>`;
+});
+document.getElementById("answerSummary").innerHTML=summaryHtml;
+}
+
+function closeGame(){window.close();}
+</script>
+
+</body>
+</html>

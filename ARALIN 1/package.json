@@ -1,0 +1,45 @@
+{
+  "name": "mika-aralin1",
+  "version": "1.0.0-beta",
+  "description": "M.I.K.A - Aralin 1: Makabagong Interaktibong Kaalaman sa Antas ng Bokabularyo",
+  "main": "desktop/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win"
+  },
+  "author": "M.I.K.A Team",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0",
+    "sharp": "^0.34.5"
+  },
+  "build": {
+    "appId": "com.mika.aralin1",
+    "productName": "M.I.K.A",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "desktop/**/*",
+      "src/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "pwa/assets/icon-512.png",
+      "signAndEditExecutable": false
+    }
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.1.0",
+    "@capacitor/cli": "^8.1.0",
+    "@capacitor/core": "^8.1.0"
+  }
+}

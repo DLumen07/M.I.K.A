@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARALIN 3 - AKTIBITI 2 Matching Type</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:linear-gradient(135deg,#667eea,#764ba2);
+color:white;
+text-align:center;
+}
+.screen{
+position:fixed;
+width:100%;
+height:100%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#667eea,#764ba2);
+}
+button{
+padding:12px 25px;
+border:none;
+border-radius:10px;
+background:#f6c23e;
+cursor:pointer;
+margin-top:15px;
+font-size:16px;
+}
+button:hover{transform:scale(1.05);}
+.game{
+display:none;
+padding:20px;
+box-sizing:border-box;
+}
+.columns{
+display:flex;
+justify-content:space-around;
+flex-wrap:wrap;
+margin-top:20px;
+}
+.column{
+width:45%;
+}
+.card{
+background:white;
+color:#333;
+padding:10px;
+margin:8px;
+border-radius:10px;
+cursor:pointer;
+}
+.dropzone{
+background:#e2e6ea;
+color:#333;
+padding:15px;
+margin:8px;
+border-radius:10px;
+min-height:40px;
+}
+.correct{background:#1cc88a !important; color:white;}
+.incorrect{background:#e74a3b !important; color:white;}
+.result{
+display:none;
+}
+</style>
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div class="screen" id="startScreen">
+<h1>ARALIN 3</h1>
+<h2>AKTIBITI 2: MATCHING TYPE</h2>
+<p>I-drag ang kahulugan mula sa Hanay B papunta sa tamang idyoma.</p>
+<button onclick="startGame()">START</button>
+</div>
+
+<!-- GAME AREA -->
+<div class="game" id="gameArea">
+<h3>Score: <span id="score">0</span>/5</h3>
+<div class="columns">
+
+<div class="column">
+<h3>HANAY A - IDYOMA</h3>
+<div class="dropzone" data-answer="balat-kalabaw">balat-kalabaw</div>
+<div class="dropzone" data-answer="buksan ang dibdib">buksan ang dibdib</div>
+<div class="dropzone" data-answer="laylay ang balikat">laylay ang balikat</div>
+<div class="dropzone" data-answer="mahal na tao">mahal na tao</div>
+<div class="dropzone" data-answer="maitim ang budhi">maitim ang budhi</div>
+</div>
+
+<div class="column">
+<h3>HANAY B - KAHULUGAN</h3>
+<div class="card" draggable="true" data-match="balat-kalabaw">matigas ang ulo / hindi tumatanggap ng payo</div>
+<div class="card" draggable="true" data-match="buksan ang dibdib">magtapat ng nararamdaman</div>
+<div class="card" draggable="true" data-match="laylay ang balikat">malungkot o nawalan ng pag-asa</div>
+<div class="card" draggable="true" data-match="mahal na tao">taong iniibig o pinahahalagahan</div>
+<div class="card" draggable="true" data-match="maitim ang budhi">may masamang hangarin</div>
+</div>
+
+</div>
+
+<button onclick="checkAnswers()">IPASA</button>
+</div>
+
+<!-- RESULT SCREEN -->
+<div class="screen result" id="resultScreen">
+<h1>TAPOS NA!</h1>
+<h2>Final Score: <span id="finalScore"></span>/5</h2>
+<div id="answerSummary"></div>
+<button onclick="closeGame()">CLOSE</button>
+</div>
+
+<script>
+let draggedItem=null;
+let score=0;
+
+function startGame(){
+document.getElementById("startScreen").style.display="none";
+document.getElementById("gameArea").style.display="block";
+}
+
+document.querySelectorAll(".card").forEach(card=>{
+card.addEventListener("dragstart",function(){
+draggedItem=this;
+});
+});
+
+document.querySelectorAll(".dropzone").forEach(zone=>{
+zone.addEventListener("dragover",function(e){
+e.preventDefault();
+});
+zone.addEventListener("drop",function(){
+if(this.children.length===0){
+this.appendChild(draggedItem);
+}
+});
+});
+
+function checkAnswers(){
+score=0;
+document.querySelectorAll(".dropzone").forEach(zone=>{
+let dropped=zone.querySelector(".card");
+if(dropped){
+if(dropped.dataset.match===zone.dataset.answer){
+score++;
+zone.classList.add("correct");
+}else{
+zone.classList.add("incorrect");
+}
+}else{
+zone.classList.add("incorrect");
+}
+});
+document.getElementById("score").innerText=score;
+setTimeout(showResult,1500);
+}
+
+function showResult(){
+document.getElementById("gameArea").style.display="none";
+document.getElementById("resultScreen").style.display="flex";
+document.getElementById("finalScore").innerText=score;
+
+let summary="";
+const answers={
+"balat-kalabaw":"matigas ang ulo / hindi tumatanggap ng payo",
+"buksan ang dibdib":"magtapat ng nararamdaman",
+"laylay ang balikat":"malungkot o nawalan ng pag-asa",
+"mahal na tao":"taong iniibig o pinahahalagahan",
+"maitim ang budhi":"may masamang hangarin"
+};
+
+for(let key in answers){
+summary+=`<p><b>${key}</b> - ${answers[key]}</p>`;
+}
+document.getElementById("answerSummary").innerHTML=summary;
+}
+
+function closeGame(){
+window.close();
+}
+</script>
+
+</body>
+</html>

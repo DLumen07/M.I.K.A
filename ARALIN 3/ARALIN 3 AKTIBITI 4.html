@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARALIN 3 - AKTIBITI 4</title>
+<style>
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:linear-gradient(135deg,#ff7e5f,#feb47b);
+color:white;
+text-align:center;
+}
+.screen{
+position:fixed;
+width:100%;
+height:100%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#ff7e5f,#feb47b);
+}
+button{
+padding:10px 20px;
+border:none;
+border-radius:10px;
+background:#f6c23e;
+cursor:pointer;
+margin-top:15px;
+font-size:16px;
+}
+button:hover{transform:scale(1.05);}
+.quiz{
+display:none;
+max-width:700px;
+margin:auto;
+padding:20px;
+}
+.choice{
+background:white;
+color:#333;
+padding:10px;
+margin:8px 0;
+border-radius:10px;
+cursor:pointer;
+}
+.choice:hover{background:#ffeaa7;}
+.correct{background:#1cc88a !important;color:white;}
+.incorrect{background:#e74a3b !important;color:white;}
+.result{
+display:none;
+}
+</style>
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div class="screen" id="startScreen">
+<h1>ARALIN 3</h1>
+<h2>AKTIBITI 4: SINGLE CHOICE</h2>
+<p>Piliin ang pinakatamang sagot sa bawat pahayag.</p>
+<button onclick="startQuiz()">START</button>
+</div>
+
+<!-- QUIZ SCREEN -->
+<div class="quiz" id="quizScreen">
+<h3 id="question"></h3>
+<div id="choices"></div>
+<p>Score: <span id="score">0</span>/5</p>
+</div>
+
+<!-- RESULT SCREEN -->
+<div class="screen result" id="resultScreen">
+<h1>TAPOS NA!</h1>
+<h2>Final Score: <span id="finalScore"></span>/5</h2>
+<div id="answerSummary"></div>
+<button onclick="closeGame()">CLOSE</button>
+</div>
+
+<script>
+const questions=[
+{
+q:"Alin sa mga idyoma ang nagpapakita ng pinakamasamang katangian ng isang tao?",
+choices:["balat-kalabaw","buksan ang dibdib","laylay ang balikat","mahal na tao","maitim ang budhi"],
+answer:4
+},
+{
+q:"Alin sa mga idyoma ang nagpapakita ng pagiging bukas at tapat sa damdamin?",
+choices:["balat-kalabaw","buksan ang dibdib","laylay ang balikat","mahal na tao","maitim ang budhi"],
+answer:1
+},
+{
+q:"Alin sa mga idyoma ang nagpapakita ng matinding kalungkutan o pagkabigo?",
+choices:["balat-kalabaw","buksan ang dibdib","laylay ang balikat","mahal na tao","maitim ang budhi"],
+answer:2
+},
+{
+q:"Alin sa mga idyoma ang tumutukoy sa taong matigas ang ulo at hindi tumatanggap ng payo?",
+choices:["balat-kalabaw","buksan ang dibdib","laylay ang balikat","mahal na tao","maitim ang budhi"],
+answer:0
+},
+{
+q:"Alin sa mga idyoma ang tumutukoy sa taong minamahal at pinahahalagahan?",
+choices:["balat-kalabaw","buksan ang dibdib","laylay ang balikat","mahal na tao","maitim ang budhi"],
+answer:3
+}
+];
+
+let current=0;
+let score=0;
+
+function startQuiz(){
+document.getElementById("startScreen").style.display="none";
+document.getElementById("quizScreen").style.display="block";
+showQuestion();
+}
+
+function showQuestion(){
+document.getElementById("question").innerText=questions[current].q;
+let choicesHtml="";
+questions[current].choices.forEach((c,i)=>{
+choicesHtml+=`<div class="choice" onclick="selectAnswer(${i})">${c}</div>`;
+});
+document.getElementById("choices").innerHTML=choicesHtml;
+}
+
+function selectAnswer(selected){
+const correct=questions[current].answer;
+const choiceDivs=document.querySelectorAll(".choice");
+if(selected===correct){
+score++;
+choiceDivs[selected].classList.add("correct");
+}else{
+choiceDivs[selected].classList.add("incorrect");
+choiceDivs[correct].classList.add("correct");
+}
+setTimeout(nextQuestion,1000);
+}
+
+function nextQuestion(){
+current++;
+if(current<questions.length){
+showQuestion();
+}else{
+showResult();
+}
+}
+
+function showResult(){
+document.getElementById("quizScreen").style.display="none";
+document.getElementById("resultScreen").style.display="flex";
+document.getElementById("finalScore").innerText=score;
+
+let summaryHtml="";
+questions.forEach((q,i)=>{
+summaryHtml+=`<p>${i+1}. ${q.q} - <b>${q.choices[q.answer]}</b></p>`;
+});
+document.getElementById("answerSummary").innerHTML=summaryHtml;
+}
+
+function closeGame(){window.close();}
+</script>
+
+</body>
+</html>

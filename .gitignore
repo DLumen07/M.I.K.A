@@ -1,0 +1,9 @@
+node_modules/
+.gradle/
+build/
+*.apk
+*.aab
+*.iml
+.idea/
+local.properties
+temp.txt

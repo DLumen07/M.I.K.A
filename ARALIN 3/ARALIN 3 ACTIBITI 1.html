@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARALIN 3 - AKTIBITI 1</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:linear-gradient(135deg,#4e73df,#1cc88a);
+color:white;
+text-align:center;
+overflow:hidden;
+}
+.screen{
+position:fixed;
+width:100%;
+height:100%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#4e73df,#1cc88a);
+}
+button{
+padding:12px 25px;
+border:none;
+border-radius:10px;
+background:#f6c23e;
+font-size:16px;
+cursor:pointer;
+margin-top:15px;
+}
+button:hover{transform:scale(1.05);}
+.container{
+display:none;
+padding:20px;
+}
+.image-wrapper{
+position:relative;
+max-width:800px;
+margin:auto;
+}
+.main-image{
+width:100%;
+border-radius:20px;
+}
+.hotspot{
+position:absolute;
+width:45px;
+height:45px;
+background:#f6c23e;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+font-weight:bold;
+cursor:pointer;
+}
+.quiz-box{
+display:none;
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+color:#333;
+padding:20px;
+border-radius:15px;
+width:350px;
+z-index:10;
+}
+.option{
+background:#eee;
+padding:8px;
+margin:5px 0;
+border-radius:8px;
+cursor:pointer;
+}
+.option:hover{background:#ddd;}
+.overlay{
+display:none;
+position:fixed;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+top:0;
+left:0;
+z-index:5;
+}
+.progress{
+width:80%;
+background:#ddd;
+margin:10px auto;
+border-radius:20px;
+}
+.progress-bar{
+height:15px;
+width:0%;
+background:#f6c23e;
+border-radius:20px;
+}
+.result{
+display:none;
+}
+.correct-answer{
+color:#1cc88a;
+font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<!-- START SCREEN -->
+<div class="screen" id="startScreen">
+<h1>ARALIN 3</h1>
+<h2>AKTIBITI 1: IMAGE HOTSPOT QUIZ</h2>
+<button onclick="startGame()">START</button>
+</div>
+
+<!-- GAME AREA -->
+<div class="container" id="gameArea">
+<h2>Score: <span id="score">0</span>/5</h2>
+<div class="progress"><div class="progress-bar" id="progress"></div></div>
+
+<div class="image-wrapper">
+
+<!-- Embedded SVG Image -->
+<svg class="main-image" viewBox="0 0 800 500">
+<rect width="800" height="500" fill="#ffffff"/>
+<text x="100" y="400" font-size="60">😔</text>
+<text x="450" y="250" font-size="60">🗣️</text>
+<text x="650" y="150" font-size="60">😈</text>
+<text x="650" y="420" font-size="60">💪</text>
+<text x="200" y="100" font-size="60">❤️</text>
+</svg>
+
+<div class="hotspot" style="top:70%; left:12%;" onclick="openQuiz(0)">+</div>
+<div class="hotspot" style="top:40%; left:55%;" onclick="openQuiz(1)">+</div>
+<div class="hotspot" style="top:20%; left:80%;" onclick="openQuiz(2)">+</div>
+<div class="hotspot" style="top:75%; left:80%;" onclick="openQuiz(3)">+</div>
+<div class="hotspot" style="top:10%; left:25%;" onclick="openQuiz(4)">+</div>
+
+</div>
+</div>
+
+<!-- QUIZ POPUP -->
+<div class="overlay" id="overlay"></div>
+<div class="quiz-box" id="quizBox">
+<h3 id="question"></h3>
+<div id="options"></div>
+<p id="correctAnswer" class="correct-answer"></p>
+<button onclick="closeQuiz()">Isara</button>
+</div>
+
+<!-- RESULT SCREEN -->
+<div class="screen result" id="resultScreen">
+<h1>TAPOS NA!</h1>
+<h2>Final Score: <span id="finalScore"></span>/5</h2>
+<div id="answerSummary"></div>
+<button onclick="closeGame()">CLOSE</button>
+</div>
+
+<script>
+const data=[
+{q:"Isang taong malungkot",a:["Laylay ang Balikat","Maitim ang Budhi","Balat-kalabaw"],correct:0},
+{q:"Nag-uusap nang seryoso",a:["Mahal na Tao","Buksan ang Dibdib","Laylay ang Balikat"],correct:1},
+{q:"May masamang plano",a:["Balat-kalabaw","Maitim ang Budhi","Buksan ang Dibdib"],correct:1},
+{q:"Hindi tinatablan ng tukso",a:["Balat-kalabaw","Laylay ang Balikat","Mahal na Tao"],correct:0},
+{q:"Labis na pinahahalagahan",a:["Maitim ang Budhi","Mahal na Tao","Balat-kalabaw"],correct:1}
+];
+
+let score=0;
+let answered=[false,false,false,false,false];
+let chosenAnswers=[null,null,null,null,null];
+
+function startGame(){
+document.getElementById("startScreen").style.display="none";
+document.getElementById("gameArea").style.display="block";
+}
+
+function openQuiz(i){
+if(answered[i]) return;
+document.getElementById("overlay").style.display="block";
+document.getElementById("quizBox").style.display="block";
+document.getElementById("question").innerText=data[i].q;
+let opt="";
+data[i].a.forEach((choice,index)=>{
+opt+=`<div class="option" onclick="checkAnswer(${i},${index})">${choice}</div>`;
+});
+document.getElementById("options").innerHTML=opt;
+document.getElementById("correctAnswer").innerText="";
+}
+
+function checkAnswer(i,choice){
+answered[i]=true;
+chosenAnswers[i]=choice;
+if(choice===data[i].correct){score++;}
+document.getElementById("score").innerText=score;
+document.getElementById("progress").style.width=(score/5*100)+"%";
+document.getElementById("correctAnswer").innerText="Tamang sagot: "+data[i].a[data[i].correct];
+if(answered.every(v=>v===true)){setTimeout(showResult,1000);}
+}
+
+function closeQuiz(){
+document.getElementById("overlay").style.display="none";
+document.getElementById("quizBox").style.display="none";
+}
+
+function showResult(){
+document.getElementById("gameArea").style.display="none";
+document.getElementById("resultScreen").style.display="flex";
+document.getElementById("finalScore").innerText=score;
+let summary="";
+data.forEach((item,i)=>{
+summary+="<p>"+item.q+" - <span class='correct-answer'>"+item.a[item.correct]+"</span></p>";
+});
+document.getElementById("answerSummary").innerHTML=summary;
+}
+
+function closeGame(){
+window.close();
+}
+</script>
+
+</body>
+</html>

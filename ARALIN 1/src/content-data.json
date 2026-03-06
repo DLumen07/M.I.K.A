@@ -1,0 +1,730 @@
+{
+  "extractionDate": "2026-03-04",
+  "source": "ARALIN1_ORIGINAL/ARALIN 1/",
+  "activities": {
+    "aktibiti1": {
+      "file": "ARALIN1AKTIBITI1..html",
+      "library": "H5P.CoursePresentation 1.26",
+      "type": "CoursePresentation",
+      "slidesCount": 1,
+      "slides": [
+        {
+          "index": 0,
+          "elements": [
+            {
+              "type": "H5P.Image 1.1",
+              "x": 0,
+              "y": 0,
+              "width": 99.852,
+              "height": 99.998,
+              "mime": "image/png",
+              "imgWidth": 1536,
+              "imgHeight": 1024
+            },
+            {
+              "type": "H5P.Audio 1.5",
+              "x": 56.583,
+              "y": 85.474,
+              "width": 8.876,
+              "height": 14.465,
+              "audioMime": "audio/x-m4a"
+            }
+          ]
+        }
+      ]
+    },
+    "aktibiti2": {
+      "file": "ARALIN1AKTIBITI2..html",
+      "library": "H5P.ImageHotspots 1.10",
+      "type": "ImageHotspots",
+      "backgroundImage": {
+        "mime": "image/png",
+        "width": 1536,
+        "height": 1024
+      },
+      "iconType": "icon",
+      "icon": "plus",
+      "color": "#1d5999",
+      "hotspots": [
+        {
+          "x": 28.4,
+          "y": 80.612,
+          "header": null,
+          "alwaysFullscreen": false,
+          "content": [
+            {
+              "library": "H5P.Text 1.1",
+              "text": "<pre>LUMBAY\n\nKahulugan: Matinding kalungkutan \n\nPangungusap: Ramdam niya ang lumbay habang nakaupo.</pre>\n"
+            }
+          ]
+        },
+        {
+          "x": 66.8,
+          "y": 81.931,
+          "header": null,
+          "alwaysFullscreen": false,
+          "content": [
+            {
+              "library": "H5P.Text 1.1",
+              "text": "<pre>NANGANGAMBA\n\nKahulugan:Nakararamdam ng takot\n\nPangungusap:Nangangamba ako dahil sa paparating na bagyo.</pre>\n"
+            }
+          ]
+        }
+      ]
+    },
+    "aktibiti2_2": {
+      "file": "ARALIN1AKTIBITI2.2..html",
+      "library": "H5P.ImageHotspots 1.10",
+      "type": "ImageHotspots",
+      "backgroundImage": {
+        "mime": "image/png",
+        "width": 1536,
+        "height": 1024
+      },
+      "iconType": "icon",
+      "icon": "plus",
+      "color": "#1d3399",
+      "hotspots": [
+        {
+          "x": 18,
+          "y": 70.106,
+          "header": null,
+          "alwaysFullscreen": false,
+          "content": [
+            {
+              "library": "H5P.Text 1.1",
+              "text": "<p><strong>Pagliyag</strong><br />\nKahulugan: Pagkagusto o paghanga sa isang tao o bagay.<br />\nHalimbawa: Nakaramdam si Juana ng pagliyag kay Don Juan.</p>\n"
+            }
+          ]
+        },
+        {
+          "x": 52.4,
+          "y": 52.116,
+          "header": null,
+          "alwaysFullscreen": false,
+          "content": [
+            {
+              "library": "H5P.Text 1.1",
+              "text": "<p><strong>Hungkag</strong><br />\nKahulugan: Walang laman o pakiramdam na walang kabuluhan.<br />\nHalimbawa: Naging hungkag ang kanyang pakiramdam dahil sa panagimpan.</p>\n"
+            }
+          ]
+        },
+        {
+          "x": 78.8,
+          "y": 68.197,
+          "header": null,
+          "alwaysFullscreen": false,
+          "content": [
+            {
+              "library": "H5P.Text 1.1",
+              "text": "<p><strong>Malasutla</strong><br />\nKahulugan: Makinis at malambot na parang seda.<br />\nHalimbawa: Malasutla ang buhok ni Maria Blanca matapos suklayin.<br />\n<br />\n </p>\n"
+            }
+          ]
+        }
+      ]
+    },
+    "aktibiti3": {
+      "file": "ARALIN1AKTIBITI3.html",
+      "library": "H5P.CoursePresentation 1.26",
+      "type": "CoursePresentation",
+      "description": "Each slide has a background image + DragQuestion with image-based draggables (word images dragged to drop zones on the background)",
+      "slidesCount": 3,
+      "slides": [
+        {
+          "index": 0,
+          "backgroundImage": {
+            "type": "H5P.Image 1.1",
+            "mime": "image/png",
+            "imgWidth": 551,
+            "imgHeight": 363
+          },
+          "dragQuestion": {
+            "backgroundImage": {
+              "mime": "image/png",
+              "width": 551,
+              "height": 352
+            },
+            "taskDescription": null,
+            "dropZones": [
+              {
+                "label": "<div>.</div>\n",
+                "x": 45.991,
+                "y": 40.685,
+                "width": 10.282,
+                "height": 1.814,
+                "correctElements": ["4"],
+                "showLabel": false
+              }
+            ],
+            "draggables": [
+              {
+                "index": 0,
+                "library": "H5P.Image 1.1",
+                "mime": "image/png",
+                "imgWidth": 373,
+                "imgHeight": 75,
+                "x": 15.92,
+                "y": 68.988,
+                "dropZones": ["0"]
+              },
+              {
+                "index": 1,
+                "library": "H5P.Image 1.1",
+                "mime": "image/png",
+                "imgWidth": 446,
+                "imgHeight": 85,
+                "x": 38.915,
+                "y": 68.635,
+                "dropZones": ["0"]
+              },
+              {
+                "index": 2,
+                "library": "H5P.Image 1.1",
+                "mime": "image/png",
+                "imgWidth": 297,
+                "imgHeight": 78,
+                "x": 68.986,
+                "y": 67.573,
+                "dropZones": ["0"]
+              },
+              {
+                "index": 3,
+                "library": "H5P.Image 1.1",
+                "mime": "image/png",
+                "imgWidth": 314,
+                "imgHeight": 71,
+                "x": 28.302,
+                "y": 80.31,
+                "dropZones": ["0"]
+              },
+              {
+                "index": 4,
+                "library": "H5P.Image 1.1",
+                "mime": "image/png",
+                "imgWidth": 276,
+                "imgHeight": 85,
+                "x": 51.297,
+                "y": 81.725,
+                "dropZones": ["0"],
+                "note": "CORRECT answer for dropZone 0"
+              }
+            ]
+          }
+        },
+        {
+          "index": 1,
+          "backgroundImage": {
+            "type": "H5P.Image 1.1",
+            "mime": "image/png",
+            "imgWidth": 551,
+            "imgHeight": 363
+          },
+          "dragQuestion": {
+            "backgroundImage": {
+              "mime": "image/png",
+              "width": 551,
+              "height": 340
+            },
+            "taskDescription": null,
+            "dropZones": [
+              {
+                "label": "<div>.</div>\n",
+                "x": 8.844,
+                "y": 17.689,
+                "width": 9.459,
+                "height": 1.814,
+                "correctElements": ["2"],
+                "showLabel": false
+              },
+              {
+                "label": "<div>.</div>\n",
+                "x": 8.435,
+                "y": 39.244,
+                "width": 9.459,
+                "height": 1.814,
+                "correctElements": ["3"],
+                "showLabel": false
+              }
+            ],
+            "draggables": [
+              {
+                "index": 0,
+                "library": "H5P.Image 1.1",
+                "mime": "image/png",
+                "imgWidth": 373,
+                "imgHeight": 75,
+                "x": 15.92,
+                "y": 68.988,
+                "dropZones": ["0", "1"]
+              },
+              {
+                "index": 1,
+                "library": "H5P.Image 1.1",
+                "mime": "image/png",
+                "imgWidth": 446,
+                "imgHeight": 85,
+                "x": 38.915,
+                "y": 68.635,
+                "dropZones": ["0", "1"]
+              },
+              {
+                "index": 2,
+                "library": "H5P.Image 1.1",
+                "mime": "image/png",
+                "imgWidth": 297,
+                "imgHeight": 78,
+                "x": 68.986,
+                "y": 67.573,
+                "dropZones": ["0", "1"],
+                "note": "CORRECT answer for dropZone 0"
+              },
+              {
+                "index": 3,
+                "library": "H5P.Image 1.1",
+                "mime": "image/png",
+                "imgWidth": 314,
+                "imgHeight": 71,
+                "x": 28.302,
+                "y": 80.31,
+                "dropZones": ["0", "1"],
+                "note": "CORRECT answer for dropZone 1"
+              },
+              {
+                "index": 4,
+                "library": "H5P.Image 1.1",
+                "mime": "image/png",
+                "imgWidth": 276,
+                "imgHeight": 85,
+                "x": 51.297,
+                "y": 81.725,
+                "dropZones": ["0", "1"]
+              }
+            ]
+          }
+        },
+        {
+          "index": 2,
+          "backgroundImage": {
+            "type": "H5P.Image 1.1",
+            "mime": "image/png",
+            "imgWidth": 551,
+            "imgHeight": 363
+          },
+          "dragQuestion": {
+            "backgroundImage": {
+              "mime": "image/png",
+              "width": 509,
+              "height": 310
+            },
+            "taskDescription": null,
+            "dropZones": [
+              {
+                "label": "<div>.</div>\n",
+                "x": 8.801,
+                "y": 21.429,
+                "width": 9.459,
+                "height": 1.814,
+                "correctElements": ["1"],
+                "showLabel": false
+              },
+              {
+                "label": "<div>.</div>\n",
+                "x": 8.418,
+                "y": 42.857,
+                "width": 9.459,
+                "height": 1.814,
+                "correctElements": ["0"],
+                "showLabel": false
+              }
+            ],
+            "draggables": [
+              {
+                "index": 0,
+                "library": "H5P.Image 1.1",
+                "mime": "image/png",
+                "imgWidth": 373,
+                "imgHeight": 75,
+                "x": 15.92,
+                "y": 68.988,
+                "dropZones": ["0", "1"],
+                "note": "CORRECT answer for dropZone 1"
+              },
+              {
+                "index": 1,
+                "library": "H5P.Image 1.1",
+                "mime": "image/png",
+                "imgWidth": 446,
+                "imgHeight": 85,
+                "x": 38.915,
+                "y": 68.635,
+                "dropZones": ["0", "1"],
+                "note": "CORRECT answer for dropZone 0"
+              },
+              {
+                "index": 2,
+                "library": "H5P.Image 1.1",
+                "mime": "image/png",
+                "imgWidth": 297,
+                "imgHeight": 78,
+                "x": 68.986,
+                "y": 67.573,
+                "dropZones": ["0", "1"]
+              },
+              {
+                "index": 3,
+                "library": "H5P.Image 1.1",
+                "mime": "image/png",
+                "imgWidth": 314,
+                "imgHeight": 71,
+                "x": 28.302,
+                "y": 80.31,
+                "dropZones": ["0", "1"]
+              },
+              {
+                "index": 4,
+                "library": "H5P.Image 1.1",
+                "mime": "image/png",
+                "imgWidth": 276,
+                "imgHeight": 85,
+                "x": 51.297,
+                "y": 81.725,
+                "dropZones": ["0", "1"]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "aktibiti4": {
+      "file": "ARALIN1AKTIBITI4.html",
+      "library": "H5P.SingleChoiceSet 1.11",
+      "type": "SingleChoiceSet",
+      "description": "Quiz - first answer in each answers array is always the correct one (index 0)",
+      "behaviour": {
+        "autoContinue": true,
+        "timeoutCorrect": 2000,
+        "timeoutWrong": 3000,
+        "soundEffectsEnabled": true,
+        "enableRetry": true,
+        "enableSolutionsButton": true,
+        "passPercentage": 100
+      },
+      "questionsCount": 5,
+      "questions": [
+        {
+          "index": 0,
+          "question": "<p><strong>Ito ay nangangahulugang walang laman; walang saysay o kabuluhan.</strong></p>",
+          "correctAnswerIndex": 0,
+          "answers": [
+            "<p>hungkag</p>",
+            "<p>walang pakinabang</p>",
+            "<p>walang gamit</p>"
+          ]
+        },
+        {
+          "index": 1,
+          "question": "<p><strong>Ito ay nangangahulugang pagmamahal o pagkagusto sa isang tao o bagay; pagkahumaling.</strong></p>",
+          "correctAnswerIndex": 0,
+          "answers": [
+            "<p>pagliyag</p>",
+            "<p>pangarap</p>",
+            "<p>pagnanasa</p>"
+          ]
+        },
+        {
+          "index": 2,
+          "question": "<p><strong>Ito ay nangangahulugang makinis at malambot tulad ng sutla.</strong></p>",
+          "correctAnswerIndex": 0,
+          "answers": [
+            "<p>malasutla</p>",
+            "<p>malambot</p>",
+            "<p>kahalihalina</p>"
+          ]
+        },
+        {
+          "index": 3,
+          "question": "<p><strong>Ito ay nangangahulugang nakararamdam ng takot o pag-aalala; nababahala.</strong></p>",
+          "correctAnswerIndex": 0,
+          "answers": [
+            "<p>nangangamba</p>",
+            "<p>nangingilabot</p>",
+            "<p>nagdaramdam</p>"
+          ]
+        },
+        {
+          "index": 4,
+          "question": "<p><strong>Ito ay nangangahulugang malungkot, malamlam, o walang kasiyahan ang damdamin o kapaligiran.</strong></p>",
+          "correctAnswerIndex": 0,
+          "answers": [
+            "<p>mapanglaw</p>",
+            "<p>masalimuot</p>",
+            "<p>nagdurusa</p>"
+          ]
+        }
+      ]
+    },
+    "aktibiti5": {
+      "file": "ARALIN1AKTIBITI5..html",
+      "library": "H5P.CoursePresentation 1.26",
+      "type": "CoursePresentation",
+      "description": "4 slides, each containing a DragQuestion with image-based draggables on a JPEG background",
+      "slidesCount": 4,
+      "slides": [
+        {
+          "index": 0,
+          "dragQuestion": {
+            "backgroundImage": {
+              "mime": "image/jpeg",
+              "width": 1077,
+              "height": 696
+            },
+            "taskDescription": null,
+            "dropZones": [
+              {
+                "label": "<div>.</div>",
+                "x": 3.065,
+                "y": 87.419,
+                "width": 8.75,
+                "height": 1.5,
+                "correctElements": ["1"],
+                "showLabel": false
+              }
+            ],
+            "draggables": [
+              {
+                "index": 0,
+                "library": "H5P.Image 1.1",
+                "mime": "image/jpeg",
+                "imgWidth": 1073,
+                "imgHeight": 340,
+                "x": 64.516,
+                "y": 54.839,
+                "dropZones": ["0"]
+              },
+              {
+                "index": 1,
+                "library": "H5P.Image 1.1",
+                "mime": "image/jpeg",
+                "imgWidth": 1073,
+                "imgHeight": 340,
+                "x": 79.032,
+                "y": 64.516,
+                "dropZones": ["0"],
+                "note": "CORRECT answer for dropZone 0"
+              },
+              {
+                "index": 2,
+                "library": "H5P.Image 1.1",
+                "mime": "image/jpeg",
+                "imgWidth": 1073,
+                "imgHeight": 340,
+                "x": 51.613,
+                "y": 45.161,
+                "dropZones": ["0"]
+              }
+            ]
+          }
+        },
+        {
+          "index": 1,
+          "dragQuestion": {
+            "backgroundImage": {
+              "mime": "image/jpeg",
+              "width": 1077,
+              "height": 696
+            },
+            "taskDescription": null,
+            "dropZones": [
+              {
+                "label": "<div>.</div>",
+                "x": 6.129,
+                "y": 81.29,
+                "width": 7.875,
+                "height": 2.25,
+                "correctElements": ["2"],
+                "showLabel": false
+              }
+            ],
+            "draggables": [
+              {
+                "index": 0,
+                "library": "H5P.Image 1.1",
+                "mime": "image/png",
+                "imgWidth": 1920,
+                "imgHeight": 1080,
+                "x": 20.484,
+                "y": 22.581,
+                "dropZones": ["0"]
+              },
+              {
+                "index": 1,
+                "library": "H5P.Image 1.1",
+                "mime": "image/jpeg",
+                "imgWidth": 1073,
+                "imgHeight": 340,
+                "x": 4.839,
+                "y": 22.581,
+                "dropZones": ["0"]
+              },
+              {
+                "index": 2,
+                "library": "H5P.Image 1.1",
+                "mime": "image/jpeg",
+                "imgWidth": 1073,
+                "imgHeight": 340,
+                "x": 33.871,
+                "y": 22.903,
+                "dropZones": ["0"],
+                "note": "CORRECT answer for dropZone 0"
+              }
+            ]
+          }
+        },
+        {
+          "index": 2,
+          "dragQuestion": {
+            "backgroundImage": {
+              "mime": "image/jpeg",
+              "width": 1077,
+              "height": 696
+            },
+            "taskDescription": null,
+            "dropZones": [
+              {
+                "label": "<div>.</div>",
+                "x": 3.226,
+                "y": 71.935,
+                "width": 8.5,
+                "height": 1.625,
+                "correctElements": ["0"],
+                "showLabel": false
+              },
+              {
+                "label": "<div>.</div>",
+                "x": 71.774,
+                "y": 85.161,
+                "width": 8.5,
+                "height": 1.625,
+                "correctElements": ["1"],
+                "showLabel": false
+              }
+            ],
+            "draggables": [
+              {
+                "index": 0,
+                "library": "H5P.Image 1.1",
+                "mime": "image/jpeg",
+                "imgWidth": 1073,
+                "imgHeight": 340,
+                "x": 50,
+                "y": 19.355,
+                "dropZones": ["0", "1"],
+                "note": "CORRECT answer for dropZone 0"
+              },
+              {
+                "index": 1,
+                "library": "H5P.Image 1.1",
+                "mime": "image/jpeg",
+                "imgWidth": 1073,
+                "imgHeight": 340,
+                "x": 64.516,
+                "y": 19.355,
+                "dropZones": ["0", "1"],
+                "note": "CORRECT answer for dropZone 1"
+              },
+              {
+                "index": 2,
+                "library": "H5P.Image 1.1",
+                "mime": "image/jpeg",
+                "imgWidth": 1073,
+                "imgHeight": 340,
+                "x": 81.774,
+                "y": 19.355,
+                "dropZones": ["0", "1"]
+              }
+            ]
+          }
+        },
+        {
+          "index": 3,
+          "dragQuestion": {
+            "backgroundImage": {
+              "mime": "image/jpeg",
+              "width": 1077,
+              "height": 696
+            },
+            "taskDescription": null,
+            "dropZones": [
+              {
+                "label": "<div>.</div>",
+                "x": 5.484,
+                "y": 81.29,
+                "width": 9.75,
+                "height": 1.75,
+                "correctElements": ["1"],
+                "showLabel": false
+              }
+            ],
+            "draggables": [
+              {
+                "index": 0,
+                "library": "H5P.Image 1.1",
+                "mime": "image/jpeg",
+                "imgWidth": 1073,
+                "imgHeight": 340,
+                "x": 41.935,
+                "y": 32.903,
+                "dropZones": ["0"]
+              },
+              {
+                "index": 1,
+                "library": "H5P.Image 1.1",
+                "mime": "image/jpeg",
+                "imgWidth": 1073,
+                "imgHeight": 340,
+                "x": 58.065,
+                "y": 32.258,
+                "dropZones": ["0"],
+                "note": "CORRECT answer for dropZone 0"
+              },
+              {
+                "index": 2,
+                "library": "H5P.Image 1.1",
+                "mime": "image/jpeg",
+                "imgWidth": 1073,
+                "imgHeight": 340,
+                "x": 72.581,
+                "y": 32.581,
+                "dropZones": ["0"]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "summary": {
+    "totalActivities": 6,
+    "activityTypes": {
+      "CoursePresentation": 3,
+      "ImageHotspots": 2,
+      "SingleChoiceSet": 1
+    },
+    "contentBreakdown": {
+      "aktibiti1": "1 slide: full-screen PNG image (1536x1024) + audio button (M4A)",
+      "aktibiti2": "ImageHotspots: PNG background (1536x1024), 2 hotspots with Filipino vocabulary words (LUMBAY, NANGANGAMBA) - definitions and example sentences",
+      "aktibiti2_2": "ImageHotspots: PNG background (1536x1024), 3 hotspots with Filipino vocabulary words (Pagliyag, Hungkag, Malasutla) - definitions and example sentences",
+      "aktibiti3": "CoursePresentation: 3 slides, each with background image + DragQuestion. 5 image-based draggables per slide (word images), 1-2 drop zones per slide. All draggables are PNG images of text/words.",
+      "aktibiti4": "SingleChoiceSet quiz: 5 questions testing Filipino vocabulary (hungkag, pagliyag, malasutla, nangangamba, mapanglaw). 3 choices each, first choice is always correct.",
+      "aktibiti5": "CoursePresentation: 4 slides, each with JPEG background (1077x696) + DragQuestion. 3 image-based draggables per slide, 1-2 drop zones per slide. All draggables are JPEG images of text/words."
+    },
+    "vocabularyWords": [
+      { "word": "Lumbay", "meaning": "Matinding kalungkutan", "sentence": "Ramdam niya ang lumbay habang nakaupo." },
+      { "word": "Nangangamba", "meaning": "Nakararamdam ng takot", "sentence": "Nangangamba ako dahil sa paparating na bagyo." },
+      { "word": "Pagliyag", "meaning": "Pagkagusto o paghanga sa isang tao o bagay", "sentence": "Nakaramdam si Juana ng pagliyag kay Don Juan." },
+      { "word": "Hungkag", "meaning": "Walang laman o pakiramdam na walang kabuluhan", "sentence": "Naging hungkag ang kanyang pakiramdam dahil sa panagimpan." },
+      { "word": "Malasutla", "meaning": "Makinis at malambot na parang seda", "sentence": "Malasutla ang buhok ni Maria Blanca matapos suklayin." },
+      { "word": "Mapanglaw", "meaning": "Malungkot, malamlam, o walang kasiyahan ang damdamin o kapaligiran", "sentence": null }
+    ]
+  }
+}

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARALIN 3 - AKTIBITI 3</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:linear-gradient(135deg,#36d1dc,#5b86e5);
+color:white;
+text-align:center;
+}
+.screen{
+position:fixed;
+width:100%;
+height:100%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#36d1dc,#5b86e5);
+}
+button{
+padding:10px 20px;
+border:none;
+border-radius:10px;
+background:#f6c23e;
+cursor:pointer;
+margin-top:15px;
+font-size:16px;
+}
+button:hover{transform:scale(1.05);}
+.game{
+display:none;
+padding:20px;
+max-width:900px;
+margin:auto;
+}
+.blank{
+border-bottom:3px solid white;
+padding:5px 10px;
+min-width:150px;
+display:inline-block;
+margin:0 5px;
+cursor:pointer;
+}
+.wordbank{
+margin-top:20px;
+}
+.word{
+background:white;
+color:#333;
+padding:8px 12px;
+margin:5px;
+display:inline-block;
+border-radius:8px;
+cursor:pointer;
+}
+.word:hover{background:#f6c23e;}
+.correct{color:#1cc88a;}
+.incorrect{color:#e74a3b;}
+.result{
+display:none;
+}
+</style>
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div class="screen" id="startScreen">
+<h1>ARALIN 3</h1>
+<h2>AKTIBITI 3: FILL IN THE BLANKS</h2>
+<p>Piliin ang tamang idyoma batay sa konteksto.</p>
+<button onclick="startGame()">START</button>
+</div>
+
+<!-- GAME AREA -->
+<div class="game" id="gameArea">
+<h3>Score: <span id="score">0</span>/5</h3>
+
+<p>
+Dahil sa kanyang pagiging <span class="blank" data-index="0"></span>, 
+hindi siya nakinig sa payo ng kanyang ina.
+</p>
+
+<p>
+Nagpasya siyang <span class="blank" data-index="1"></span> 
+upang ipahayag ang kanyang tunay na damdamin.
+</p>
+
+<p>
+Nang siya’y mabigo, siya’y <span class="blank" data-index="2"></span> 
+habang nakaupo sa sulok.
+</p>
+
+<p>
+Sa kabila ng lahat, nanatili siyang isang <span class="blank" data-index="3"></span> 
+sa puso ng kanyang pamilya.
+</p>
+
+<p>
+Ngunit ang kanyang kaibigan ay may <span class="blank" data-index="4"></span> 
+kaya siya’y nagawang lokohin.
+</p>
+
+<div class="wordbank">
+<div class="word">balat-kalabaw</div>
+<div class="word">buksan ang dibdib</div>
+<div class="word">laylay ang balikat</div>
+<div class="word">mahal na tao</div>
+<div class="word">maitim ang budhi</div>
+</div>
+
+<button onclick="checkAnswers()">IPASA</button>
+</div>
+
+<!-- RESULT SCREEN -->
+<div class="screen result" id="resultScreen">
+<h1>TAPOS NA!</h1>
+<h2>Final Score: <span id="finalScore"></span>/5</h2>
+<div id="answerSummary"></div>
+<button onclick="closeGame()">CLOSE</button>
+</div>
+
+<script>
+const correctAnswers=[
+"balat-kalabaw",
+"buksan ang dibdib",
+"laylay ang balikat",
+"mahal na tao",
+"maitim ang budhi"
+];
+
+let selectedWord=null;
+let score=0;
+
+function startGame(){
+document.getElementById("startScreen").style.display="none";
+document.getElementById("gameArea").style.display="block";
+}
+
+document.querySelectorAll(".word").forEach(word=>{
+word.addEventListener("click",function(){
+selectedWord=this.innerText;
+});
+});
+
+document.querySelectorAll(".blank").forEach(blank=>{
+blank.addEventListener("click",function(){
+if(selectedWord){
+this.innerText=selectedWord;
+selectedWord=null;
+}
+});
+});
+
+function checkAnswers(){
+score=0;
+document.querySelectorAll(".blank").forEach(blank=>{
+let index=blank.dataset.index;
+if(blank.innerText===correctAnswers[index]){
+score++;
+blank.classList.add("correct");
+}else{
+blank.classList.add("incorrect");
+}
+});
+document.getElementById("score").innerText=score;
+setTimeout(showResult,1500);
+}
+
+function showResult(){
+document.getElementById("gameArea").style.display="none";
+document.getElementById("resultScreen").style.display="flex";
+document.getElementById("finalScore").innerText=score;
+
+let summary="";
+for(let i=0;i<correctAnswers.length;i++){
+summary+=`<p>${correctAnswers[i]}</p>`;
+}
+document.getElementById("answerSummary").innerHTML=summary;
+}
+
+function closeGame(){
+window.close();
+}
+</script>
+
+</body>
+</html>
