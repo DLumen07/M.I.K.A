@@ -1792,7 +1792,7 @@ body::before {
   }
 
   /* Keep scroll space above mobile footer */
-  .view-drag-drop, .poem-activity {
+  .view-drag-drop, .poem-activity, .wm-activity {
     padding-bottom: 90px !important;
   }
 }
