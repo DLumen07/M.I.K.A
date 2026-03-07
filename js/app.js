@@ -159,11 +159,17 @@
     if (!toggle) return;
     // Restore saved theme
     const saved = localStorage.getItem('mika_theme');
-    if (saved === 'light') document.body.classList.add('light-mode');
+    if (saved === 'light') {
+      document.body.classList.add('light-mode');
+      document.documentElement.classList.add('light-mode');
+    }
+    const meta = document.querySelector('meta[name="theme-color"]');
     toggle.addEventListener('click', () => {
       document.body.classList.toggle('light-mode');
+      document.documentElement.classList.toggle('light-mode');
       const isLight = document.body.classList.contains('light-mode');
       localStorage.setItem('mika_theme', isLight ? 'light' : 'dark');
+      if (meta) meta.content = isLight ? '#F2F2F7' : '#0f0f11';
     });
   }
 
