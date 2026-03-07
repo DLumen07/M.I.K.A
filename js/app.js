@@ -679,9 +679,11 @@
           wordsDiv.querySelectorAll('.dd-word').forEach(b => b.classList.remove('selected'));
           if (sharedState.selectedWord === word) {
             sharedState.selectedWord = null;
+            view.querySelectorAll('.dd-drop-zone').forEach(z => z.classList.remove('highlight'));
           } else {
             sharedState.selectedWord = word;
             btn.classList.add('selected');
+            view.querySelectorAll('.dd-drop-zone:not(.correct):not(.filled)').forEach(z => z.classList.add('highlight'));
           }
         }
         isDragging = false;
@@ -692,9 +694,11 @@
         wordsDiv.querySelectorAll('.dd-word').forEach(b => b.classList.remove('selected'));
         if (sharedState.selectedWord === word) {
           sharedState.selectedWord = null;
+          view.querySelectorAll('.dd-drop-zone').forEach(z => z.classList.remove('highlight'));
         } else {
           sharedState.selectedWord = word;
           btn.classList.add('selected');
+          view.querySelectorAll('.dd-drop-zone:not(.correct):not(.filled)').forEach(z => z.classList.add('highlight'));
         }
       });
 
@@ -868,11 +872,13 @@
         }
       });
 
-      // Click to remove placed word, or place selected word
-      zone.addEventListener('click', () => {
+      // Tap/click to place selected word or remove placed word
+      function handleZoneTap() {
         if (sharedState.selectedWord && !zone.classList.contains('correct')) {
           placeWord(zone, sharedState.selectedWord, sharedState.usedWords, wordsDiv);
           sharedState.selectedWord = null;
+          wordsDiv.querySelectorAll('.dd-word').forEach(b => b.classList.remove('selected'));
+          view.querySelectorAll('.dd-drop-zone').forEach(z => z.classList.remove('highlight'));
         } else if (zone.classList.contains('filled') && !zone.classList.contains('correct')) {
           const word = zone.dataset.placed;
           sharedState.usedWords.delete(word);
@@ -880,6 +886,17 @@
           zone.classList.remove('filled');
           delete zone.dataset.placed;
           updateWordButtons(wordsDiv, sharedState.usedWords);
+        }
+      }
+      zone.addEventListener('click', handleZoneTap);
+      // Also handle touchend for mobile reliability
+      let zoneTouchMoved = false;
+      zone.addEventListener('touchstart', () => { zoneTouchMoved = false; }, { passive: true });
+      zone.addEventListener('touchmove', () => { zoneTouchMoved = true; }, { passive: true });
+      zone.addEventListener('touchend', (e) => {
+        if (!zoneTouchMoved) {
+          e.preventDefault();
+          handleZoneTap();
         }
       });
 
