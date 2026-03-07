@@ -2356,6 +2356,14 @@ body.light-mode .quiz-choice {
 body.light-mode .quiz-choice:hover {
   background: rgba(0,0,0,0.08);
 }
+body.light-mode .quiz-choice.correct {
+  background: #dcf5e0; border-color: #2e7d32; color: #1b5e20;
+}
+body.light-mode .quiz-choice.wrong {
+  background: #fde0e4; border-color: #CE1126; color: #b71c1c;
+}
+body.light-mode .quiz-progress-dot.done { background: #2e7d32; }
+body.light-mode .quiz-progress-dot.wrong { background: #CE1126; }
 
 /* --- True/False --- */
 body.light-mode .tf-btn {
