@@ -635,11 +635,6 @@
         // If not yet decided, determine intent
         if (!touchDecided && (Math.abs(dx) > DRAG_THRESHOLD || Math.abs(dy) > DRAG_THRESHOLD)) {
           touchDecided = true;
-          // Only start drag if movement is NOT mostly vertical (allow page scrolling)
-          if (Math.abs(dy) > Math.abs(dx) * 1.5) {
-            // Vertical swipe — let browser scroll naturally
-            return;
-          }
           isDragging = true;
           e.preventDefault();
           touchClone = btn.cloneNode(true);

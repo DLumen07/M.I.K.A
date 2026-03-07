@@ -19,7 +19,7 @@ body {
   font-family: 'Nunito', 'Segoe UI', system-ui, sans-serif;
     background: #0f0f11;
     color: #F8F9FA;
-  touch-action: manipulation;
+  touch-action: none;
 }
 
 body::before {
@@ -676,11 +676,6 @@ body::before {
   background: rgba(252, 209, 22, 0.25);
   box-shadow: 0 0 12px rgba(252, 209, 22, 0.4), inset 0 0 8px rgba(252, 209, 22, 0.15);
   transform: scale(1.05);
-  animation: zoneGlow 1.2s ease-in-out infinite;
-}
-@keyframes zoneGlow {
-  0%, 100% { box-shadow: 0 0 12px rgba(252, 209, 22, 0.4), inset 0 0 8px rgba(252, 209, 22, 0.15); }
-  50% { box-shadow: 0 0 20px rgba(252, 209, 22, 0.6), inset 0 0 12px rgba(252, 209, 22, 0.25); }
 }
 .dd-drop-zone.filled {
   border-style: solid; border-color: rgba(255,255,255,0.2);
@@ -724,12 +719,12 @@ body::before {
   width: 88%;
   max-width: 420px;
   margin: 12px auto 0;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(28, 28, 30, 0.85);
   backdrop-filter: blur(40px) saturate(1.8);
   -webkit-backdrop-filter: blur(40px) saturate(1.8);
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  box-shadow: none;
   display: flex;
   justify-content: center;
   padding: 6px 4px;
@@ -1565,7 +1560,7 @@ body::before {
   }
   .dd-word { font-size: 12px; padding: 8px 12px; min-height: 36px; }
   .dd-drop-zone { min-height: 40px; min-width: 80px; padding: 6px 10px; }
-  .dd-drop-zone.highlight { transform: scale(1.08); animation: zoneGlow 1.2s ease-in-out infinite; }
+  .dd-drop-zone.highlight { transform: scale(1.08); }
   .quiz-card { padding: 20px 18px; border-radius: 24px; }
   .quiz-question { font-size: 16px; margin-bottom: 14px; padding-bottom: 12px; }
   .quiz-choices { gap: 8px; }
