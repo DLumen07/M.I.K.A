@@ -635,7 +635,11 @@
         // If not yet decided, determine intent
         if (!touchDecided && (Math.abs(dx) > DRAG_THRESHOLD || Math.abs(dy) > DRAG_THRESHOLD)) {
           touchDecided = true;
-          // Only start drag if horizontal movement dominates, or already on the word
+          // Only start drag if movement is NOT mostly vertical (allow page scrolling)
+          if (Math.abs(dy) > Math.abs(dx) * 1.5) {
+            // Vertical swipe — let browser scroll naturally
+            return;
+          }
           isDragging = true;
           e.preventDefault();
           touchClone = btn.cloneNode(true);
@@ -675,7 +679,9 @@
           if (zone && !zone.classList.contains('correct')) {
             placeWord(zone, word, sharedState.usedWords, wordsDiv);
           }
-        } else {
+        } else if (!touchDecided) {
+          // This was a clean tap (no movement at all) — prevent click from double-firing
+          e.preventDefault();
           wordsDiv.querySelectorAll('.dd-word').forEach(b => b.classList.remove('selected'));
           if (sharedState.selectedWord === word) {
             sharedState.selectedWord = null;
@@ -689,6 +695,7 @@
         isDragging = false;
       });
 
+      // Desktop click fallback (won't double-fire on mobile since touchend calls preventDefault)
       btn.addEventListener('click', () => {
         if (btn.classList.contains('used')) return;
         wordsDiv.querySelectorAll('.dd-word').forEach(b => b.classList.remove('selected'));
