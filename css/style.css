@@ -2160,7 +2160,7 @@ body.light-mode .dash-hero-greeting {
   color: #FFFFFF;
   text-shadow: 0 1px 4px rgba(0,0,0,0.2);
 }
-body.light-mode .dash-hero-sun { opacity: 0.1; }
+body.light-mode .dash-hero-sun { opacity: 0.35; }
 
 /* --- Section header --- */
 body.light-mode .dash-section-title { color: #1C1C1E; }
@@ -2418,5 +2418,53 @@ body.light-mode .poem-card {
   box-shadow: 0 8px 32px rgba(0,0,0,0.06);
 }
 body.light-mode .poem-title { color: #1C1C1E; }
+body.light-mode .poem-title::after {
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.12), transparent);
+}
+body.light-mode .poem-line { color: #2C2C2E; }
+body.light-mode .poem-bold { color: #1C1C1E; }
+body.light-mode .poem-stanza { color: #2C2C2E; }
+body.light-mode .poem-player {
+  background: #F2F2F7;
+  border-color: rgba(0,0,0,0.08);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+body.light-mode .poem-progress-wrap { background: rgba(0,0,0,0.1); }
+body.light-mode .poem-time { color: rgba(0,0,0,0.45); }
 
+/* --- Hotspot extras --- */
+body.light-mode .hotspot-card-title { text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
+body.light-mode .instr-ribbon { background: #0038A8; }
 
+/* --- DD & WM check/reset buttons (keep as-is, they have solid bg) --- */
+body.light-mode .dd-check-btn,
+body.light-mode .wm-check-btn,
+body.light-mode .tf-check-btn { border-color: rgba(0,56,168,0.2); }
+body.light-mode .dd-reset-btn,
+body.light-mode .wm-clear-btn { border-color: rgba(206,17,38,0.2); }
+
+/* --- Slide counter --- */
+body.light-mode .slide-counter { color: rgba(0,0,0,0.4); }
+
+/* --- Feedback button --- */
+body.light-mode .feedback-btn { box-shadow: 0 4px 16px rgba(0,56,168,0.2); }
+
+/* --- DD word ghost --- */
+body.light-mode .dd-word-ghost {
+  color: #fff;
+  background: linear-gradient(to bottom, #0038A8, #002D7A);
+}
+
+/* --- Generic view backgrounds --- */
+body.light-mode .view-quiz,
+body.light-mode .view-drag-drop,
+body.light-mode .view-hotspots,
+body.light-mode .wm-activity,
+body.light-mode .poem-activity {
+  background: transparent;
+}
+
+/* --- Sunrays in dashboard hero (full color in light mode) --- */
+body.light-mode .dash-hero-sun { opacity: 0.35; }
+body.light-mode .loading-screen::after,
+html.light-mode .loading-screen::after { opacity: 0.08; }
