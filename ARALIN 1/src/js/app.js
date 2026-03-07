@@ -44,10 +44,13 @@
         });
       }
     });
+    // Also preload dashboard images
+    allImages.push('assets/images/sunrays.png');
+    allImages.push('assets/images/MIKA_header.png');
     let loaded = 0;
     const total = allImages.length;
     let dashboardShown = false;
-    const minLoadTime = 1500; // minimum 1.5s loading screen
+    const minLoadTime = 4500; // minimum 4.5s loading screen
     const loadStart = Date.now();
 
     function triggerDashboard() {

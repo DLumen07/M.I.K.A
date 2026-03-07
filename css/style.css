@@ -3,6 +3,17 @@
 ::-webkit-scrollbar { display: none; }
 html, body { height: 100%; overflow: hidden; }
 
+/* Remove tap highlight and fix focus outline */
+* { -webkit-tap-highlight-color: transparent; }
+button, a, [role="button"], .dash-card, .dash-btn, .nav-arrow-btn, .home-btn, .dd-word, .dd-panuto-close, .quiz-choice, .tf-btn, .wm-word, .wm-def, .hotspot-card-btn {
+  outline: none;
+}
+button:focus-visible, a:focus-visible {
+  outline: 2px solid rgba(252, 209, 22, 0.6);
+  outline-offset: 2px;
+  border-radius: inherit;
+}
+
 /* ===== BACKGROUND & THEME (BEIGE & MAROON) ===== */
 body {
   font-family: 'Nunito', 'Segoe UI', system-ui, sans-serif;
@@ -1628,17 +1639,19 @@ body::before {
     position: fixed; inset: 0; z-index: 50;
     display: flex; align-items: flex-start; justify-content: center;
     background: transparent;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: none !important;
-    -ms-overflow-style: none;
+    -ms-overflow-style: none !important;
     -webkit-overflow-scrolling: touch;
     font-family: 'Nunito', 'Segoe UI', system-ui, sans-serif;
     max-width: 100vw;
+    overflow: -moz-scrollbars-none;
   }
   .dashboard::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; background: transparent !important; }
-  .dashboard::-webkit-scrollbar-thumb { background: transparent !important; }
-  .dashboard::-webkit-scrollbar-track { background: transparent !important; }
+  .dashboard::-webkit-scrollbar-thumb { display: none !important; background: transparent !important; }
+  .dashboard::-webkit-scrollbar-track { display: none !important; background: transparent !important; }
+  .dashboard * ::-webkit-scrollbar { display: none !important; }
   .dashboard * { max-width: 100%; }
 
   /* Creative Background Orbs */
@@ -1723,10 +1736,12 @@ body::before {
     pointer-events: none;
     z-index: 0;
     flex-shrink: 0;
+    content-visibility: auto;
   }
   .dash-hero-sun img {
     width: 100%; height: 100%;
     object-fit: contain;
+    loading: eager;
   }
   .dash-hero-info { flex: 1; z-index: 1; }
   .dash-hero-label {
