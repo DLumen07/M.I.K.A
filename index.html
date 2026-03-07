@@ -31,28 +31,22 @@
   <div id="loadingScreen" class="loading-screen">
     <div class="loader-content">
       <div class="loader-icon">
-        <!-- Robot mascot silhouette -->
-        <svg viewBox="0 0 120 120" width="100" height="100">
-          <defs>
-            <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#8B2232"/>
-              <stop offset="100%" stop-color="#FFB340"/>
-            </linearGradient>
-          </defs>
-          <circle cx="60" cy="60" r="54" fill="rgba(139,34,50,0.06)" stroke="url(#goldGrad)" stroke-width="3"/>
-          <circle cx="60" cy="60" r="44" fill="none" stroke="url(#goldGrad)" stroke-width="2.5" stroke-dasharray="276" stroke-dashoffset="276" stroke-linecap="round">
-            <animate attributeName="stroke-dashoffset" from="276" to="0" dur="1.6s" fill="freeze" calcMode="spline" keySplines="0.4 0 0.2 1"/>
-          </circle>
-          <!-- Book icon -->
-          <path d="M42 50c0-3 2-5 5-5h26c3 0 5 2 5 5v20c0 3-2 5-5 5H47c-3 0-5-2-5-5V50z" fill="none" stroke="url(#goldGrad)" stroke-width="2.5" opacity="0.9"/>
-          <line x1="60" y1="46" x2="60" y2="74" stroke="url(#goldGrad)" stroke-width="2" opacity="0.7"/>
-          <!-- Star -->
-          <path d="M60 34l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" fill="url(#goldGrad)" opacity="0.85"/>
-        </svg>
+        <div class="loader-spinner"></div>
+        <div class="loader-sun-wrap">
+          <svg class="loader-star star-top" viewBox="0 0 24 24" width="14" height="14">
+            <polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#FCD116"/>
+          </svg>
+          <svg class="loader-star star-left" viewBox="0 0 24 24" width="12" height="12">
+            <polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#FCD116"/>
+          </svg>
+          <svg class="loader-star star-right" viewBox="0 0 24 24" width="12" height="12">
+            <polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#FCD116"/>
+          </svg>
+          <img src="assets/images/sunrays.png" alt="" class="loader-sun-img">
+        </div>
       </div>
       <h1 class="loader-title">M.I.K.A</h1>
       <p class="loader-subtitle">Makabagong Interaktibong Kaalaman<br>sa Antas ng Bokabularyo</p>
-      <p class="loader-hint">Inihahanda ang iyong aralin...</p>
     </div>
   </div>
 
@@ -63,14 +57,22 @@
 
       <!-- Top Bar -->
       <div class="dash-topbar">
-        <div class="dash-topbar-logo">M.I.K.A</div>
+        <img src="assets/images/MIKA_header.png" alt="M.I.K.A" class="dash-topbar-logo">
       </div>
 
       <!-- Greeting -->
       <div class="dash-hero">
         <div class="dash-hero-info">
           <p class="dash-hero-label">Magandang Araw!</p>
+          <div class="dash-stars">
+            <span class="star"></span>
+            <span class="star"></span>
+            <span class="star"></span>
+          </div>
           <h2 class="dash-hero-greeting">Halina't pagyamanin ang ating wika!</h2>
+        </div>
+        <div class="dash-hero-sun">
+          <img src="assets/images/sunrays.png" alt="">
         </div>
       </div>
 
@@ -84,7 +86,14 @@
 
         <!-- Aralin 1 -->
         <div class="dash-card active" data-topic="bokabularyo">
-          <div class="dash-card-icon">📕</div>
+          <div class="dash-card-icon">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#CE1126" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              <line x1="9" y1="7" x2="15" y2="7"/>
+              <line x1="9" y1="11" x2="13" y2="11"/>
+            </svg>
+          </div>
           <div class="dash-card-info">
             <span class="dash-card-label">ARALIN 1</span>
             <h3>Bokabularyo</h3>
@@ -95,7 +104,13 @@
         
         <!-- Aralin 2 -->
         <div id="cardAralin2" class="dash-card active" data-topic="konteksto">
-          <div class="dash-card-icon">💬</div>
+          <div class="dash-card-icon">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#0038A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              <line x1="8" y1="8" x2="16" y2="8"/>
+              <line x1="8" y1="12" x2="13" y2="12"/>
+            </svg>
+          </div>
           <div class="dash-card-info">
             <span class="dash-card-label">ARALIN 2</span>
             <h3>Konteksto</h3>
@@ -106,7 +121,13 @@
 
         <!-- Aralin 3 -->
         <div id="cardAralin3" class="dash-card active" data-topic="idyoma">
-          <div class="dash-card-icon">💡</div>
+          <div class="dash-card-icon">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#FCD116" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/>
+              <path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
           <div class="dash-card-info">
             <span class="dash-card-label">ARALIN 3</span>
             <h3>Idyoma</h3>

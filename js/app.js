@@ -590,7 +590,8 @@
       let touchClone = null;
       let touchStartX = 0, touchStartY = 0;
       let isDragging = false;
-      const DRAG_THRESHOLD = 10;
+      let touchDecided = false;
+      const DRAG_THRESHOLD = 8;
 
       btn.addEventListener('touchstart', (e) => {
         if (btn.classList.contains('used')) return;
@@ -598,6 +599,7 @@
         touchStartX = touch.clientX;
         touchStartY = touch.clientY;
         isDragging = false;
+        touchDecided = false;
         touchClone = null;
       }, { passive: true });
 
@@ -607,7 +609,10 @@
         const dx = touch.clientX - touchStartX;
         const dy = touch.clientY - touchStartY;
 
-        if (!isDragging && (Math.abs(dx) > DRAG_THRESHOLD || Math.abs(dy) > DRAG_THRESHOLD)) {
+        // If not yet decided, determine intent
+        if (!touchDecided && (Math.abs(dx) > DRAG_THRESHOLD || Math.abs(dy) > DRAG_THRESHOLD)) {
+          touchDecided = true;
+          // Only start drag if horizontal movement dominates, or already on the word
           isDragging = true;
           e.preventDefault();
           touchClone = btn.cloneNode(true);
@@ -620,6 +625,7 @@
           touchClone.style.opacity = '0.85';
           document.body.appendChild(touchClone);
           btn.classList.add('dragging');
+          view.classList.add('dd-dragging');
           view.querySelectorAll('.dd-drop-zone:not(.correct)').forEach(z => z.classList.add('highlight'));
         }
 
@@ -638,6 +644,7 @@
           if (touchClone.parentNode) touchClone.parentNode.removeChild(touchClone);
           touchClone = null;
           btn.classList.remove('dragging');
+          view.classList.remove('dd-dragging');
           view.querySelectorAll('.dd-drop-zone').forEach(z => z.classList.remove('highlight'));
 
           const target = document.elementFromPoint(touch.clientX, touch.clientY);
