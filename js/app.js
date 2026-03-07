@@ -85,6 +85,7 @@
     setupFullscreen();
     setupPopup();
     setupDashboard();
+    setupThemeToggle();
     initProgressDots();
 
     // Restore navigation state after refresh
@@ -151,6 +152,19 @@
       const desc = card2.querySelector('.dash-card-desc');
       if (desc) desc.textContent = 'Mga Salita sa Konteksto';
     }
+  }
+
+  function setupThemeToggle() {
+    const toggle = $('#themeToggle');
+    if (!toggle) return;
+    // Restore saved theme
+    const saved = localStorage.getItem('mika_theme');
+    if (saved === 'light') document.body.classList.add('light-mode');
+    toggle.addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+      const isLight = document.body.classList.contains('light-mode');
+      localStorage.setItem('mika_theme', isLight ? 'light' : 'dark');
+    });
   }
 
   function showDashboard() {
